@@ -5,7 +5,7 @@
 # == Basic usage:
 #    {%render product.description}
 #
-class RenderTag < ScriboTag
+class RenderTag < LiquorTag
   def render(context)
     super
 

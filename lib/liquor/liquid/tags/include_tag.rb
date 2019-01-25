@@ -10,7 +10,7 @@
 #
 # This allows you pass variables to the included content, which will only available there
 #
-class IncludeTag < ScriboTag
+class IncludeTag < LiquorTag
   def render(context)
     super
 

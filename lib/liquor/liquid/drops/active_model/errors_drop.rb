@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Scribo
+module Liquor
   class ActiveModel::ErrorsDrop < Liquid::Drop
     def initialize(object)
       @object = object

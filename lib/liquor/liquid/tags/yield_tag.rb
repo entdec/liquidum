@@ -5,7 +5,7 @@
 # == Basic usage:
 #    {%yield%}
 #    {%yield 'sidebar'%}
-class YieldTag < ScriboTag
+class YieldTag < LiquorTag
   def render(context)
     super
 

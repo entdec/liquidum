@@ -10,7 +10,7 @@
 #
 # This last usage requires a model on the form
 #
-class CheckBoxTag < ScriboTag
+class CheckBoxTag < LiquorTag
   def render(context)
     super
 

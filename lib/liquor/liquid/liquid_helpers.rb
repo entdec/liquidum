@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Scribo
+module Liquor
   module LiquidHelpers
 
     private

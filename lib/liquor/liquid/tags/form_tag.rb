@@ -21,7 +21,7 @@
 #
 require_relative '../drops/form_drop'
 
-class FormTag < ScriboBlock
+class FormTag < LiquorBlock
   def render(context)
     super
 

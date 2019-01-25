@@ -1,33 +1,41 @@
 require 'liquor/engine'
 require 'liquor/configuration'
 
+require 'liquor/liquid/drops/active_model/errors_drop'
+require 'liquor/liquid/liquid_helpers'
+require 'liquor/liquid/liquid_template_extensions'
+require 'liquor/liquid/liquor_block'
+require 'liquor/liquid/liquor_tag'
+require 'liquor/liquid/parser'
+
 module Liquor
   class Error < StandardError; end
   class UnknownStepTypeError < Error; end
 
   class << self
-    attr_reader :config
+    def config
+      @config = Liquor::Configuration.new
+    end
 
     def setup
-      @config = Vorto::Config.new
       yield config
     end
 
-    def render(content, assigns, registers, options = {})
+    def render(content, options = {})
       template = Liquid::Template.parse(content)
-      result   = template.render(assigns, registers: registers)
+      result   = template.render(options[:assigns], registers: options[:registers])
 
       errors = template.errors.map { |error| error.try(:cause)&.message }.join(', ')
-      Liquir.config.logger.error "Template rendering error on #{content.id}: #{errors}" if errors.present?
+      Liquor.config.logger.error "Template rendering error on: #{errors}" if errors.present?
 
-      assigns   = template.assigns.stringify_keys.merge(assigns)
-      registers = template.registers.stringify_keys.merge(registers)
+      assigns   = template.assigns.stringify_keys.merge(options[:assigns])
+      registers = template.registers.stringify_keys.merge(options[:registers])
 
       result    = Tilt[options[:filter]].new { result }.render if options[:filter].present?
-      if content.layout
+      if options[:layout]
         registers['_yield']     = {} unless registers['_yield']
         registers['_yield'][''] = result.delete("\n")
-        result                  = render_with_liquid(content.layout, assigns, registers)
+        result                  = render(options[:layout], assigns: assigns, registers: registers)
       end
       result
     end

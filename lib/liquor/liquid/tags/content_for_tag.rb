@@ -9,7 +9,7 @@
 #
 # The content in the block will be available to the yield tag
 #
-class ContentForTag < ScriboBlock
+class ContentForTag < LiquorBlock
   def render(context)
     super
 

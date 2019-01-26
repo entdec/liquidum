@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Liquid
+module Liquor
   class Tag
     require 'parslet'
 

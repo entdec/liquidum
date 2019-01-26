@@ -6,7 +6,7 @@ module Liquor
     private
 
     def initialize(tag, args, tokens)
-      @args = Liquid::Tag::Parser.new(args).args
+      @args = Liquor::Tag::Parser.new(args).args
       super
     end
 
@@ -94,7 +94,7 @@ module Liquor
       result.join
     end
 
-    # Lookup allows access to the assigned variables through the tag context or returns name itself
+    # Lookup allows access to the assigned variables through the context
     def lookup(context, name)
       return unless name
 
@@ -123,10 +123,21 @@ module Liquor
       when :name
         # The original class's name dictates the name of the fields
         parts.first + '[' + parts.slice(1..-1).join('][') + ']'
-
+      when :error
+        parts.slice(1..-1).join('.')
       when :checked
         'checked' if (input(:value, name) ? 1 : 0) == 1
       end
     end
+
+    # Returns the path for the input from the main form, say: origin.contact_name
+    def path_for_input(name)
+      parts = @context.scopes.select { |scope| scope.key? 'form' }.select { |scope| scope['form'].attribute }.map do |scope|
+        scope['form'].attribute
+      end
+      parts = parts.unshift(name.to_s).reverse
+      parts.join('.')
+    end
+
   end
 end

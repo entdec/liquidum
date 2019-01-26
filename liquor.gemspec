@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'pg'
   spec.add_dependency 'rails', '~> 5'
   spec.add_dependency 'slim-rails', '~> 3.2.0'
+  spec.add_dependency 'sassc', '~> 2.0.0'
 
   spec.add_development_dependency 'minitest', '~> 5.11'
   spec.add_development_dependency 'minitest-reporters', '~> 1.1'

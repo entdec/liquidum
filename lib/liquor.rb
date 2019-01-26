@@ -1,3 +1,7 @@
+require 'liquid'
+require 'tilt'
+require 'sassc'
+
 require 'liquor/engine'
 require 'liquor/configuration'
 

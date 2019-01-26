@@ -20,7 +20,7 @@ module Liquor
 
     # Return named argument
     def arg(name)
-      raise "No @context set" unless @context
+      raise 'No @context set' unless @context
 
       attr = @args.find { |a| a[:attr] == name.to_s }
       return unless attr
@@ -35,7 +35,7 @@ module Liquor
     # Returns the first argument - usually reserved for literal or quoted values, not for attribute value pairs
     # When the first attribute is a pair, it will return nil
     def argv1
-      raise "No @context set" unless @context
+      raise 'No @context set' unless @context
 
       argv1 = @args[0]
       return unless argv1
@@ -49,7 +49,7 @@ module Liquor
 
     # Returns the standalone arguments
     def sargs
-      raise "No @context set" unless @context
+      raise 'No @context set' unless @context
 
       @args.slice(1..-1).select { |a| a.key?(:quoted) || a.key?(:literal) }.map do |a|
         if a.key? :quoted
@@ -62,7 +62,7 @@ module Liquor
 
     # Returns the attribute-value-pair arguments as a hash
     def attr_args
-      raise "No @context set" unless @context
+      raise 'No @context set' unless @context
 
       result = {}
       @args.select { |a| a.key?(:value) || a.key?(:lvalue) }.map do |a|
@@ -83,7 +83,7 @@ module Liquor
     # @return [String]
     def attr_str(attr, value, default = nil)
       v = value || default
-      v.present? ? " #{attr}=\"#{v}\"" : ""
+      v.present? ? " #{attr}=\"#{v}\"" : ''
     end
 
     def attrs_str(*attrs)
@@ -122,7 +122,7 @@ module Liquor
         form_model.send(name.to_sym)
       when :name
         # The original class's name dictates the name of the fields
-        parts.first + "[" + parts.slice(1..-1).join("][") + "]"
+        parts.first + '[' + parts.slice(1..-1).join('][') + ']'
 
       when :checked
         'checked' if (input(:value, name) ? 1 : 0) == 1

@@ -14,10 +14,19 @@ class TextFieldTag < LiquorTag
   def render(context)
     super
 
-    %[<input] + attr_str(:name, arg(:name), input(:name, argv1)) +
-      attr_str(:id, arg(:id), input(:id, argv1)) +
-      attr_str(:value, arg(:value), input(:value, argv1)) +
-      attrs_str(:disabled, :maxlength, :placeholder) + %[ type="text"/>]
+    result = %[<input] + attr_str(:name, arg(:name), input(:name, argv1)) +
+             attr_str(:id, arg(:id), input(:id, argv1)) +
+             attr_str(:value, arg(:value), input(:value, argv1)) +
+             attrs_str(:disabled, :maxlength, :placeholder) + %[ type="text"/>]
+
+    # Errors for field
+    main_form = @context.scopes.select { |scope| scope.key? 'form' }.last
+    if main_form
+      error_messages = main_form['form'].errors.messages[path_for_input(argv1)]
+      result += (error_messages || []).join(',')
+    end
+
+    result
   end
 end
 

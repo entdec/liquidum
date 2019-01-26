@@ -13,6 +13,8 @@ class FormDrop < Liquid::Drop
   end
 
   def errors
+    return [] unless @model&.instance_variable_get('@object')
+
     ActiveModel::ErrorsDrop.new @model.instance_variable_get('@object').errors
   end
 end

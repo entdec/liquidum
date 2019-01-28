@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require 'liquid'
 require 'tilt'
 require 'sassc'
 
+require 'liquor/version'
 require 'liquor/engine'
 require 'liquor/configuration'
 

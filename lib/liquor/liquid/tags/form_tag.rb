@@ -39,7 +39,10 @@ class FormTag < LiquorBlock
 
     if context.registers['controller']
       result += %[<input name="_method" type="hidden" value="#{rails_method}"/>] if rails_method
-      result += %[<input name="authenticity_token" type="hidden" value="#{context.registers['controller'].session['_csrf_token']}"/>]
+
+      # embed_authenticity_token_in_remote_forms
+
+      result += %[<input name="authenticity_token" type="hidden" value="#{context.registers['controller'].helpers.form_authenticity_token}"/>]
     end
 
     context.stack do

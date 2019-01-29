@@ -8,12 +8,12 @@ require 'liquor/version'
 require 'liquor/engine'
 require 'liquor/configuration'
 
-require 'liquor/liquid/drops/active_model/errors_drop'
-require 'liquor/liquid/liquid_helpers'
-require 'liquor/liquid/liquid_template_extensions'
-require 'liquor/liquid/liquor_block'
-require 'liquor/liquid/liquor_tag'
-require 'liquor/liquid/parser'
+require_dependency 'liquor/liquid/drops/active_model/errors_drop'
+require_dependency 'liquor/liquid/liquid_helpers'
+require_dependency 'liquor/liquid/liquid_template_extensions'
+require_dependency 'liquor/liquid/liquor_block'
+require_dependency 'liquor/liquid/liquor_tag'
+require_dependency 'liquor/liquid/parser'
 
 module Liquor
   class Error < StandardError; end

@@ -11,13 +11,20 @@
 # This last usage requires a model on the form
 #
 class TextFieldTag < LiquorTag
+  attr_accessor :field_type
+
+  def initialize(tag, args, tokens)
+    super
+    @field_type = 'text'
+  end
+
   def render(context)
     super
 
     result = %[<input] + attr_str(:name, arg(:name), input(:name, argv1)) +
              attr_str(:id, arg(:id), input(:id, argv1)) +
              attr_str(:value, arg(:value), input(:value, argv1)) +
-             attrs_str(:disabled, :maxlength, :placeholder) + %[ type="text"/>]
+             attrs_str(:disabled, :maxlength, :placeholder) + %[ type="#{field_type}"/>]
 
     # Errors for field
     main_form = @context.scopes.select { |scope| scope.key? 'form' }.last

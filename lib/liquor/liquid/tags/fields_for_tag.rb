@@ -21,11 +21,20 @@ class FieldsForTag < LiquorBlock
 
     result = ''
 
-    new_model = lookup(context['form.model'], argv1)
+    new_model = context["form.model.#{argv1}"]
     context.stack do
       context['form'] = FormDrop.new(new_model, argv1)
       result += render_body
+
+      if context['form.model.id']
+        result += %[<input] +
+                  attr_str(:id, arg(:id), input(:id, 'id')) +
+                  attr_str(:name, arg(:name), input(:name, 'id')) +
+                  attr_str(:value, arg(:value), input(:value, 'id')) +
+                  %[type="hidden"/>]
+      end
     end
+
     result
   end
 end

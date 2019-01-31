@@ -11,7 +11,7 @@
 # This last usage requires a model on the form
 #
 
-require_relative './number_field_tag'
+require_relative './text_field_tag'
 
 class NumberFieldTag < TextFieldTag
   def initialize(tag, args, tokens)

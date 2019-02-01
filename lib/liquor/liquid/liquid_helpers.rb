@@ -43,7 +43,7 @@ module Liquor
       if argv1.key? :quoted
         argv1[:quoted].to_s
       elsif argv1.key? :literal
-        lookup(@context, argv1[:literal].to_s) || argv1[:literal]
+        @context.key?(argv1[:literal].to_s) ? @context[argv1[:literal].to_s] : argv1[:literal].to_s
       end
     end
 

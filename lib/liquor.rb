@@ -8,12 +8,12 @@ require 'liquor/version'
 require 'liquor/engine'
 require 'liquor/configuration'
 
-require_dependency 'liquor/liquid/drops/active_model/errors_drop'
-require_dependency 'liquor/liquid/liquid_helpers'
-require_dependency 'liquor/liquid/liquid_template_extensions'
-require_dependency 'liquor/liquid/liquor_block'
-require_dependency 'liquor/liquid/liquor_tag'
-require_dependency 'liquor/liquid/parser'
+require 'liquor/liquid/drops/active_model/errors_drop'
+require 'liquor/liquid/liquid_helpers'
+require 'liquor/liquid/liquid_template_extensions'
+require 'liquor/liquid/liquor_block'
+require 'liquor/liquid/liquor_tag'
+require 'liquor/liquid/parser'
 
 module Liquor
   class Error < StandardError; end
@@ -35,8 +35,8 @@ module Liquor
       errors = template.errors.map { |error| error.try(:cause)&.message }.join(', ')
       Liquor.config.logger.error "Template rendering error on: #{errors}" if errors.present?
 
-      assigns   = template.assigns.stringify_keys.merge(options[:assigns])
-      registers = template.registers.stringify_keys.merge(options[:registers])
+      assigns   = template.assigns.stringify_keys.merge(options[:assigns] || {}) if template.assigns
+      registers = template.registers.stringify_keys.merge(options[:registers] || {}) if template.registers
 
       result    = Tilt[options[:filter]].new { result }.render if options[:filter].present?
       if options[:layout]

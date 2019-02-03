@@ -14,6 +14,7 @@ class IncludeTag < LiquorTag
   def render(context)
     super
 
+    # TODO: How to make this work for both Scribo and Nuntius
     current_content = context.registers['content']
     content = current_content.bucket.contents.published.identified(argv1).first
 

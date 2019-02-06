@@ -10,8 +10,7 @@ module TranslateFilter
   #
   def translate(input, locale = I18n.locale)
     content = @context.registers['content']
-    scope = content ? content.translation_scope : nil
-    I18n.t(input, locale: locale, scope: scope, content: content, bucket: content.bucket, cascade: true)
+    I18n.t(input, locale: locale, bucket: content.bucket, cascade: true)
   end
   alias_method :t, :translate
 end

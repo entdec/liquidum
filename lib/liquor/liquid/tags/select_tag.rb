@@ -13,6 +13,7 @@ class SelectTag < LiquorBlock
     super
 
     result = %[<select] + attr_str(:name, arg(:name), input(:name, argv1)) +
+      attr_str(:id, arg(:id), input(:id, argv1)) +
       attr_str(:class, arg(:class)) +
       %[>] + render_body + %[</select>]
 

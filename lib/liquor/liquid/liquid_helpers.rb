@@ -107,8 +107,16 @@ module Liquor
       form_model = lookup(@context, 'form.model')
       form_class_name = lookup(@context, 'form.class_name')
 
+      # order[order_lines_attributes][xxxx][product_name]
+      #
+      # order[order_attributes]_[lines_attributes][][product_name]
+
       parts = @context.scopes.select { |scope| scope.key? 'form' }.map do |scope|
-        scope['form'].attribute ? scope['form'].attribute.to_s.gsub(/([a-z\-]+)/) { "[#{Regexp.last_match(1)}_attributes]" } : scope['form'].class_name.underscore
+        if scope['form'].attribute
+          scope['form'].attribute.to_s.gsub(/([a-z\-\_]+)/) { "[#{Regexp.last_match(1)}_attributes]" }.gsub(/\[\]$/, "[#{SecureRandom.uuid}]")
+        else
+          scope['form'].class_name.underscore.gsub('/', '_')
+        end
       end
       parts = parts.unshift("[#{name}]").reverse
 
@@ -137,6 +145,10 @@ module Liquor
       end
       parts = parts.unshift(name.to_s).reverse
       parts.join('.')
+    end
+
+    def real_object_from_drop(drop)
+      drop.instance_variable_get('@object')
     end
 
   end

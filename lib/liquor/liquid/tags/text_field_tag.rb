@@ -27,11 +27,13 @@ class TextFieldTag < LiquorTag
              attrs_str(:disabled, :maxlength, :placeholder) + %[ type="#{field_type}"/>]
 
     # Errors for field
-    main_form = @context.scopes.select { |scope| scope.key? 'form' }.last
-    if main_form
-      error_messages = main_form['form'].errors.messages[path_for_input(argv1)]
-      result += (error_messages || []).join(',')
-    end
+    # main_form = @context.scopes.select { |scope| scope.key? 'form' }.last
+    # if main_form
+    #   error_messages = main_form['form'].errors.messages[path_for_input(argv1)]
+    #   result += (error_messages || []).join(',')
+    # end
+    error_messages = context["form.errors.messages.#{argv1}"]
+    result += (error_messages || []).join(',')
 
     result
   end

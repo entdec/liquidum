@@ -53,16 +53,16 @@ class FieldsForTag < LiquorBlock
                          end
 
       new_model = begin
-        reflection = real_object_from_drop(@context["form.model"]).class.reflect_on_association(association_name)
+        reflection = real_object_from_drop(@context['form.model']).class.reflect_on_association(association_name)
         if reflection.polymorphic?
           # If it's polymorphic we need hints on what to do
           sargs.first.to_s.safe_constantize.new(attr_args)
         elsif reflection.is_a?(ActiveRecord::Reflection::HasManyReflection) && reflection.constructable?
           # Do model.association.new
-          real_object_from_drop(@context["form.model"]).send(association_name.to_sym).new(attr_args)
+          real_object_from_drop(@context['form.model']).send(association_name.to_sym).new(attr_args)
         elsif reflection.is_a?(ActiveRecord::Reflection::BelongsToReflection) && reflection.constructable?
           # Do model.build_association
-          real_object_from_drop(@context["form.model"]).send("build_#{association_name}".to_sym, attr_args)
+          real_object_from_drop(@context['form.model']).send("build_#{association_name}".to_sym, attr_args)
         else
           # Just call new on the class
           reflection.klass.new(attr_args)

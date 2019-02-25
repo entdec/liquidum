@@ -65,11 +65,13 @@ module Liquor
       raise 'No @context set' unless @context
 
       result = {}
-      @args.select { |a| a.key?(:value) || a.key?(:lvalue) }.map do |a|
+      @args.select { |a| a.key?(:value) || a.key?(:lvalue) || a.key?(:svalue) }.map do |a|
         if a.key? :value
           result[a[:attr].to_sym] = a[:value].to_s
         elsif a.key? :lvalue
           result[a[:attr].to_sym] = lookup(@context, a[:lvalue].to_s) || a[:lvalue]
+        elsif a.key? :svalue
+          result[a[:attr].to_sym] = a[:svalue].to_sym
         end
       end
       result

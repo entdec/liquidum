@@ -48,10 +48,11 @@ class ParserTest < ActiveSupport::TestCase
   end
 
   test 'parses combination' do
-    args = Liquor::Tag::Parser.new(%[shipment method=themethod method="post" action="/test" 'hoi' action=theaction]).args
+    args = Liquor::Tag::Parser.new(%[shipment method=themethod method="post" action="/test" 'hoi' action=theaction position=:left]).args
     assert_includes args, literal: 'shipment'
     assert_includes args, attr: 'method', lvalue: 'themethod'
     assert_includes args, attr: 'action', lvalue: 'theaction'
+    assert_includes args, attr: 'position', svalue: 'left'
     assert_includes args, attr: 'method', value: 'post'
     assert_includes args, attr: 'action', value: '/test'
     assert_includes args, quoted: 'hoi'

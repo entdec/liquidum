@@ -9,11 +9,14 @@ module Liquor
       rule(:squote) { str("'").repeat(1) }
       rule(:dquote) { str('"').repeat(1) }
 
+      rule(:colon) { str(':').repeat(1) }
+
       rule(:space) { match('\s').repeat(1) }
       rule(:space?) { space.maybe }
 
       # Things
       rule(:identifier) { (match('[a-zA-Z]') >> match('[a-zA-Z0-9\.\_\-\[\]\'\"]').repeat) }
+      rule(:symbol_literal) { colon >> identifier.as(:svalue) }
 
       rule(:eqs) { str('=').repeat(1) }
       rule(:nsqvalue) { match["^'"] }
@@ -33,10 +36,10 @@ module Liquor
       rule(:standalone) { identifier.as(:literal) >> space? }
       rule(:quoted) { standalone_quoted_value >> space? }
       rule(:attr_with_literal) { identifier.as(:attr) >> eqs >> identifier.as(:lvalue) >> space? }
+      rule(:attr_with_symbol_literal) { identifier.as(:attr) >> eqs >> symbol_literal >> space? }
       rule(:attr_with_quoted) { identifier.as(:attr) >> eqs >> quoted_value >> space? }
 
-      rule(:attribute) { attr_with_quoted | attr_with_literal | quoted | standalone }
-      # rule(:attribute) { identifier | attr_with_literal | attr_with_quoted }
+      rule(:attribute) { attr_with_quoted | attr_with_symbol_literal | attr_with_literal | quoted | standalone }
       rule(:expression) { attribute.repeat }
       root :expression
     end

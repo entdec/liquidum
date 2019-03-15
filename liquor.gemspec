@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'liquid', '~> 4.0.0'
   spec.add_dependency 'parslet'
   spec.add_dependency 'pg'
-  spec.add_dependency 'rails', '~> 5'
+  spec.add_dependency 'rails', '>= 5.2'
   spec.add_dependency 'slim-rails', '~> 3.2.0'
   spec.add_dependency 'sassc', '~> 2.0.0'
 

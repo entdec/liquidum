@@ -26,9 +26,9 @@ class AssetTag < LiquorTag
         attr_str(:src, arg(:src), path) +
         attr_str(:alt, content.title, content.name) +
         attr_str(:title, content.caption, content.name) +
-        attr_str(:title, arg(:width)) +
-        attr_str(:title, arg(:height)) +
-        attr_str(:title, arg(:style)) +
+        attr_str(:width, arg(:width)) +
+        attr_str(:height, arg(:height)) +
+        attr_str(:style, arg(:style)) +
         %[/>]
     when 'style'
       path = content.path ? content.path : context.registers['controller'].helpers.scribo.content_path(content)

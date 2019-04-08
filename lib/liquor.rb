@@ -30,7 +30,7 @@ module Liquor
 
     def render(content, options = {})
       template = Liquid::Template.parse(content)
-      result   = template.render(options[:assigns], registers: options[:registers])
+      result   = template.render(options[:assigns].stringify_keys, registers: options[:registers])
 
       errors = template.errors.map { |error| error.try(:cause)&.message }.join(', ')
       Liquor.config.logger.error "Template rendering error on: #{errors}" if errors.present?

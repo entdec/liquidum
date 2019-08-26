@@ -14,7 +14,7 @@ module TranslateFilter
   #
   #   <div class="summary">{{'.title' | t: gender: 'm', locale: 'nl'}}</div>
   #
-  def translate(input, options)
+  def translate(input, options = {})
     scope = Liquor.config.translation_scope(@context)
     locale = options.delete('locale')
     I18n.t(input, options, locale: locale, scope: scope, cascade: true)

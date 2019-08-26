@@ -20,11 +20,10 @@ module Liquor
   class UnknownStepTypeError < Error; end
 
   class << self
-    def config
-      @config = Liquor::Configuration.new
-    end
+    attr_reader :config
 
     def setup
+      @config = Configuration.new
       yield config
     end
 

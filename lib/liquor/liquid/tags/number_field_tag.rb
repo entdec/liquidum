@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-# Add a text-field, either specifying everything manually or using a model object on the form
+# Add a number-field, either specifying everything manually or using a model object on the form
 #
 # == Basic usage:
-#    {%number_field name="name" value="Pencil"%}
+#    {%number_field name="name" value="1"%}
 #
 # == Advanced usage:
 #    {%number_field name%}

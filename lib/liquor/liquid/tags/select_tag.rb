@@ -17,13 +17,6 @@ class SelectTag < LiquorBlock
       attr_str(:class, arg(:class)) +
       %[>] + render_body + %[</select>]
 
-    # Errors for field
-    main_form = context.scopes.select { |scope| scope.key? 'form' }.last
-    if main_form
-      error_messages = main_form['form'].errors.messages[path_for_input(argv1)]
-      result += (error_messages || []).join(',')
-    end
-
     result
   end
 end

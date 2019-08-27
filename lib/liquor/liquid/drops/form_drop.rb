@@ -2,7 +2,7 @@
 
 class FormDrop < Liquid::Drop
   def initialize(model, attribute = nil)
-    @model = model
+    @model     = model
     @attribute = attribute
   end
 
@@ -13,8 +13,12 @@ class FormDrop < Liquid::Drop
   end
 
   def errors
-    return [] unless @model
+    errors = if @model&.instance_variable_get('@object')
+               @model.instance_variable_get('@object').errors
+             else
+               ActiveModel::Errors.new([])
+             end
 
-    ActiveModel::ErrorsDrop.new @model.instance_variable_get('@object').errors
+    ActiveModel::ErrorsDrop.new errors
   end
 end

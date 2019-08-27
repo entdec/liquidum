@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-Liquor.setup do |config| 
+Liquor.setup do |config|
 
 end

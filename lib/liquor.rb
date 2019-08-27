@@ -31,8 +31,15 @@ module Liquor
       template = Liquid::Template.parse(content)
       result   = template.render(options[:assigns].stringify_keys, registers: options[:registers])
 
-      errors = template.errors.map { |error| error.try(:cause)&.message }.join(', ')
-      Liquor.config.logger.error "Template rendering error on: #{errors}" if errors.present?
+      if template.errors.present?
+        Liquor.config.logger.error '--- Template rendering errors: ' + '-' * 49
+        errors = template.errors.map do |error|
+          next unless error.cause
+
+          Liquor.config.logger.error '=> ' + error.cause.backtrace.first + ': ' + error.cause.message
+        end
+        Liquor.config.logger.error '-' * 80
+      end
 
       assigns   = template.assigns.stringify_keys.merge(options[:assigns] || {}) if template.assigns
       registers = template.registers.stringify_keys.merge(options[:registers] || {}) if template.registers

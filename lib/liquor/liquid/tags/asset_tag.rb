@@ -35,6 +35,11 @@ class AssetTag < LiquorTag
       %[<link rel="stylesheet" type="text/css"] +
         attr_str(:href, arg(:href), path) +
         %[/>]
+    when 'script'
+      path = content.path ? content.path : context.registers['controller'].helpers.scribo.content_path(content)
+      %[<script] +
+        attr_str(:src, arg(:src), path) +
+        %[/></script>]
     end
   end
 end

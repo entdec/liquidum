@@ -20,4 +20,4 @@ class SearchFieldTag < TextFieldTag
   end
 end
 
-Liquid::Template.register_tag('search_field', TelephoneFieldTag)
+Liquid::Template.register_tag('search_field', SearchFieldTag)

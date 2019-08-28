@@ -20,4 +20,4 @@ class PasswordFieldTag < TextFieldTag
   end
 end
 
-Liquid::Template.register_tag('password_field', TelephoneFieldTag)
+Liquid::Template.register_tag('password_field', PasswordFieldTag)

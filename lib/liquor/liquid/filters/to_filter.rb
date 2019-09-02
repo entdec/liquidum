@@ -15,7 +15,7 @@ module ToFilter
     when 'yaml'
       to_dump = input
       to_dump = to_dump.to_h if input.is_a?(HashWithIndifferentAccess)
-      result  = YAML.dump(to_dump.to_h)
+      result  = YAML.dump(to_dump)
       result  = result.gsub(/^---\n/, '') if options['inline']
       result
     when 'json'

@@ -10,10 +10,12 @@ module ToFilter
   # Advanced example:
   #   {{payload | to: 'json', pretty: true}}
   #
-  def to(input, format, options={})
+  def to(input, format, options = {})
     case format
     when 'yaml'
-      YAML.dump(input)
+      result = YAML.dump(input.to_h)
+      result = result.gsub(/^---\n/, '') if options['inline']
+      result
     when 'json'
       if options['pretty']
         JSON.pretty_generate(input)
@@ -21,7 +23,7 @@ module ToFilter
         input.to_json
       end
     else
-      raise "No to format given"
+      raise 'No to format given'
     end
   end
 end

@@ -13,8 +13,10 @@ module ToFilter
   def to(input, format, options = {})
     case format
     when 'yaml'
-      result = YAML.dump(input.to_h)
-      result = result.gsub(/^---\n/, '') if options['inline']
+      to_dump = input
+      to_dump = to_dump.to_h if input.is_a?(HashWithIndifferentAccess)
+      result  = YAML.dump(to_dump.to_h)
+      result  = result.gsub(/^---\n/, '') if options['inline']
       result
     when 'json'
       if options['pretty']

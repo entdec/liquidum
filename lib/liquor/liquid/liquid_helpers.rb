@@ -88,7 +88,9 @@ module Liquor
       v.present? ? " #{attr}=\"#{v}\"" : ''
     end
 
-    def attrs_str(*attrs)
+    def attrs_str(*attrs, reject: [])
+      attrs = @args.map { |a| a[:attr] }.reject { |a| a.nil? || reject.include?(a) } if attrs.empty?
+
       result = []
       attrs.each do |attr|
         result << attr_str(attr, arg(attr))
@@ -106,7 +108,7 @@ module Liquor
     # For use with forms and inputs
     def input(purpose, name)
 
-      form_model = lookup(@context, 'form.model')
+      form_model      = lookup(@context, 'form.model')
       form_class_name = lookup(@context, 'form.class_name')
 
       # order[order_lines_attributes][xxxx][product_name]

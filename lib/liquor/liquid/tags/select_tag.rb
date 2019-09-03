@@ -14,7 +14,7 @@ class SelectTag < LiquorBlock
 
     result = %[<select] + attr_str(:name, arg(:name), input(:name, argv1)) +
       attr_str(:id, arg(:id), input(:id, argv1)) +
-      attr_str(:class, arg(:class)) +
+      attrs_str(reject: %[name id]) +
       %[>] + render_body + %[</select>]
 
     result

@@ -25,16 +25,17 @@ class FormTag < LiquorBlock
   def render(context)
     super
 
-    method = arg(:method).to_s.downcase || 'post'
+    method       = arg(:method).to_s.downcase || 'post'
     rails_method = nil
-    unless %w[get post].include? method
+    if %w[get post].exclude? method
       rails_method = method
-      method = 'post'
+      method       = 'post'
     end
 
     result = %[<form] +
              attr_str(:action, arg(:action)) +
              attr_str(:method, method) +
+             attrs_str(reject: %[action method]) +
              %[>]
 
     if context.registers['controller']
@@ -44,7 +45,7 @@ class FormTag < LiquorBlock
 
     context.stack do
       context['form'] = FormDrop.new(argv1)
-      result += render_body
+      result          += render_body
     end
     result += %[</form>]
     result

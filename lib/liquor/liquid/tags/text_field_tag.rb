@@ -21,10 +21,13 @@ class TextFieldTag < LiquorTag
   def render(context)
     super
 
-    result = %[<input] + attr_str(:name, arg(:name), input(:name, argv1)) +
+    result = %[<input] +
+             attr_str(:name, arg(:name), input(:name, argv1)) +
              attr_str(:id, arg(:id), input(:id, argv1)) +
-             attr_str(:value, arg(:value), input(:value, argv1)) +
-             attrs_str(:disabled, :maxlength, :placeholder) + %[ type="#{field_type}"/>]
+             attr_str(:value, arg(:value), input(:value, argv1))
+
+    result += attrs_str(reject: %[name value id])
+    result += %[ type="#{field_type}"/>]
     result
   end
 end

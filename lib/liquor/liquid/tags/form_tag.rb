@@ -25,7 +25,9 @@ class FormTag < LiquorBlock
   def render(context)
     super
 
-    method       = arg(:method).to_s.downcase || 'post'
+    method = arg(:method).to_s.downcase
+    method = argv1.instance_variable_get('@object').persisted? ? 'patch' : 'post' if method.blank? && argv1
+
     rails_method = nil
     if %w[get post].exclude? method
       rails_method = method

@@ -8,20 +8,15 @@
 class FieldErrorTag < LiquorTag
   attr_accessor :field_type
 
-  def initialize(tag, args, tokens)
-    super
-    @field_type = 'text'
-  end
-
   def render(context)
     super
 
     error_messages = context['form'].errors.messages[argv1]
 
     if error_messages.present?
-      result += %[<span>] +
-        attr_str(:class, arg(:class), input(:class, argv1)) +
-        (error_messages || []).join(', ') + %[</span>]
+      result = %[<span>] +
+               attr_str(:class, arg(:class), input(:class, argv1)) +
+               (error_messages || []).join(', ') + %[</span>]
     end
 
     result

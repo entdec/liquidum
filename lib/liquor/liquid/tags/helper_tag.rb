@@ -4,6 +4,7 @@
 #
 # == Basic usage:
 #    {%helper 'user_index_path'%}
+#    {%helper 'check_box_tag' pet_dog%}
 #
 # == Advanced usage:
 #    {%helper 'user_index_path' user%}

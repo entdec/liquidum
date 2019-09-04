@@ -9,6 +9,7 @@ module ToFilter
   #
   # Advanced example:
   #   {{payload | to: 'json', pretty: true}}
+  #   {%assign today = 'now'|to: 'date'%}
   #
   def to(input, format, options = {})
     case format
@@ -24,6 +25,13 @@ module ToFilter
       else
         input.to_json
       end
+    when 'date'
+      date = Liquid::Utils.to_date(input)
+
+      return input if date.to_s.empty?
+      return date if options[:format].to_s.empty?
+
+      date.strftime(options[:format].to_s)
     else
       raise 'No to format given'
     end

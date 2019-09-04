@@ -47,6 +47,11 @@ class ParserTest < ActiveSupport::TestCase
     assert_includes args, attr: 'method', lvalue: 'post'
   end
 
+  test 'parses literal attribute value with dot' do
+    args = Liquor::Tag::Parser.new("url=request.fullpath").args
+    assert_includes args, attr: 'url', lvalue: 'request.fullpath'
+  end
+
   test 'parses combination' do
     args = Liquor::Tag::Parser.new(%[shipment method=themethod method="post" action="/test" 'hoi' action=theaction position=:left]).args
     assert_includes args, literal: 'shipment'

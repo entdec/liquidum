@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 $LOAD_PATH.push File.expand_path('lib', __dir__)
 
 # Maintain your gem's version:
@@ -9,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.version     = Liquor::VERSION
   spec.authors     = ['Tom de Grunt']
   spec.email       = ['tom@degrunt.nl']
-  spec.homepage    = 'https://coden.entropydecelerator.com/components/liquor'
+  spec.homepage    = 'https://code.entropydecelerator.com/components/liquor'
   spec.summary     = 'Liquid templating - on steroids'
   spec.description = 'Ready made set of tags, parsings and awesomeness'
   spec.license     = 'MIT'
@@ -22,8 +24,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'parslet'
   spec.add_dependency 'pg'
   spec.add_dependency 'rails', '>= 5.2'
-  spec.add_dependency 'slim-rails', '~> 3.2.0'
   spec.add_dependency 'sassc', '~> 2.0.0'
+  spec.add_dependency 'slim-rails', '~> 3.2.0'
 
   spec.add_development_dependency 'minitest', '~> 5.11'
   spec.add_development_dependency 'minitest-reporters', '~> 1.1'

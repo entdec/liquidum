@@ -3,7 +3,7 @@
 # Add a telephone-field, either specifying everything manually or using a model object on the form
 #
 # == Basic usage:
-#    {%telephone_field name="phone" value="1"%}
+#    {%telephone_field name:"phone" value:"1"%}
 #
 # == Advanced usage:
 #    {%telephone_field phone%}

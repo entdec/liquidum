@@ -11,7 +11,7 @@ class FieldErrorTag < LiquorTag
   def render(context)
     super
 
-    error_messages = context['form'].errors.messages[argv1]
+    error_messages = lookup(context, "form.errors.messages.#{argv1}")
 
     if error_messages.present?
       result = %[<span>] +

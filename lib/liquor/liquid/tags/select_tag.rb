@@ -3,7 +3,7 @@
 # Adds a (by default submit) button
 #
 # == Basic usage:
-#    {%select name='group'%}{%endselect%}
+#    {%select name:'group'%}{%endselect%}
 #
 # == Advanced usage:
 #    {%select group%}{%endselect%}

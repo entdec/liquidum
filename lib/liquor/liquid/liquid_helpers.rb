@@ -2,7 +2,6 @@
 
 module Liquor
   module LiquidHelpers
-
     private
 
     def initialize(tag, args, tokens)
@@ -107,9 +106,10 @@ module Liquor
 
     # For use with forms and inputs
     def input(purpose, name)
-
       form_model      = lookup(@context, 'form.model')
       form_class_name = lookup(@context, 'form.class_name')
+
+      # binding.pry if name == 'postal_code'
 
       # order[order_lines_attributes][xxxx][product_name]
       #
@@ -154,6 +154,5 @@ module Liquor
     def real_object_from_drop(drop)
       drop.instance_variable_get('@object')
     end
-
   end
 end

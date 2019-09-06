@@ -3,11 +3,11 @@
 # Adds a (by default submit) button
 #
 # == Basic usage:
-#    {%button name='commit' value='save'%}Save{%endbutton%}
+#    {%button name:'commit' value:'save'%}Save{%endbutton%}
 #
 # == Advanced usage:
-#    {%button button name='commit' value='save'%}Save{%endbutton%}
-#    {%button reset name='commit' value='save'%}Save{%endbutton%}
+#    {%button button name:'commit' value:'save'%}Save{%endbutton%}
+#    {%button reset name:'commit' value:'save'%}Save{%endbutton%}
 #
 class ButtonTag < LiquorBlock
   def render(context)

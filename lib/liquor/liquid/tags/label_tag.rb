@@ -3,7 +3,7 @@
 # Add a text_field, either specifying everything manually or using a model object on the form
 #
 # == Basic usage:
-#    {%label for="name"%}Name:{%endlabel%}
+#    {%label for:"name"%}Name:{%endlabel%}
 #
 # == Advanced usage:
 #    {%label name%}Name:{%endlabel%}

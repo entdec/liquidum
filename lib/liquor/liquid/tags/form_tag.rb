@@ -5,7 +5,7 @@
 #
 # == Basic usage:
 #    {%form%}
-#      {%text_field name="name" value="Pencil"%}
+#      {%text_field name:"name" value:"Pencil"%}
 #    {%endform%}
 #
 # == Advanced usage:

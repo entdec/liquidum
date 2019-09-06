@@ -3,7 +3,7 @@
 # Add a check-box, either specifying everything manually or using a model object on the form
 #
 # == Basic usage:
-#    {%check_box name="name" value="1"%}
+#    {%check_box name:"name" value:"1"%}
 #
 # == Advanced usage:
 #    {%check_box name%}

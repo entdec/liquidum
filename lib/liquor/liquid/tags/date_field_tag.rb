@@ -3,7 +3,7 @@
 # Add a date-field, either specifying everything manually or using a model object on the form
 #
 # == Basic usage:
-#    {%date_field name="start_date" value="2019-09-27"%}
+#    {%date_field name:"start_date" value:"2019-09-27"%}
 #
 # == Advanced usage:
 #    {%date_field start_date%}

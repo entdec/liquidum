@@ -18,11 +18,10 @@ module Liquor
       rule(:identifier) { (match('[a-zA-Z]') >> match('[a-zA-Z0-9\.\_\-\[\]\'\"]').repeat) }
       rule(:symbol_literal) { colon >> identifier.as(:svalue) }
 
-      rule(:eqs) { str('=').repeat(1) }
       rule(:nsqvalue) { match["^'"] }
       rule(:ndqvalue) { match['^"'] }
 
-      rule(:literal_value) { identifier >> eqs >> identifier }
+      rule(:literal_value) { identifier >> colon >> identifier }
 
       rule(:squoted_value) { squote >> nsqvalue.repeat.as(:value) >> squote }
       rule(:dquoted_value) { dquote >> ndqvalue.repeat.as(:value) >> dquote }
@@ -35,11 +34,10 @@ module Liquor
       # Grammar parts
       rule(:standalone) { identifier.as(:literal) >> space? }
       rule(:quoted) { standalone_quoted_value >> space? }
-      rule(:attr_with_literal) { identifier.as(:attr) >> eqs >> identifier.as(:lvalue) >> space? }
-      rule(:attr_with_symbol_literal) { identifier.as(:attr) >> eqs >> symbol_literal >> space? }
-      rule(:attr_with_quoted) { identifier.as(:attr) >> eqs >> quoted_value >> space? }
+      rule(:attr_with_literal) { identifier.as(:attr) >> colon >> identifier.as(:lvalue) >> space? }
+      rule(:attr_with_quoted) { identifier.as(:attr) >> colon >> quoted_value >> space? }
 
-      rule(:attribute) { attr_with_quoted | attr_with_symbol_literal | attr_with_literal | quoted | standalone }
+      rule(:attribute) { attr_with_quoted | attr_with_literal | quoted | standalone }
       rule(:expression) { attribute.repeat }
       root :expression
     end

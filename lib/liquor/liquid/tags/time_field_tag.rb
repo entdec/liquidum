@@ -3,7 +3,7 @@
 # Add a time-field, either specifying everything manually or using a model object on the form
 #
 # == Basic usage:
-#    {%time_field name="name" value="1"%}
+#    {%time_field name:"name" value:"1"%}
 #
 # == Advanced usage:
 #    {%time_field name%}

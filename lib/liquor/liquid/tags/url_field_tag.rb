@@ -3,7 +3,7 @@
 # Add a url-field, either specifying everything manually or using a model object on the form
 #
 # == Basic usage:
-#    {%url_field name="homepage" value="1"%}
+#    {%url_field name:"homepage" value:"1"%}
 #
 # == Advanced usage:
 #    {%url_field homepage%}

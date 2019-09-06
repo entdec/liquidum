@@ -8,10 +8,10 @@
 #
 # == Advanced usage:
 #    {%assign airports = "Eindhoven, Schiphol" | split: ', '%}
-#    {%options_for_select airports selected="Schiphol" disabled="Eindhoven"%}
+#    {%options_for_select airports selected:"Schiphol" disabled:"Eindhoven"%}
 #
 # == Advanced usage:
-#    {%options_for_select airports name value selected="Schiphol" disabled="Eindhoven"%}
+#    {%options_for_select airports name value selected:"Schiphol" disabled:"Eindhoven"%}
 #
 # This last usage requires a model on the form
 #

@@ -3,7 +3,7 @@
 # Add a email-field, either specifying everything manually or using a model object on the form
 #
 # == Basic usage:
-#    {%email_field name="email" value="1"%}
+#    {%email_field name:"email" value:"1"%}
 #
 # == Advanced usage:
 #    {%email_field email%}

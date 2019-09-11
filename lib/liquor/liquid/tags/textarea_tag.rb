@@ -11,7 +11,6 @@
 # This last usage requires a model on the form
 #
 class TextareaTag < LiquorTag
-
   def initialize(tag, args, tokens)
     super
   end
@@ -25,7 +24,7 @@ class TextareaTag < LiquorTag
 
     result += attrs_str(reject: %[name value id])
     result += %[ />]
-    result += arg(:value).to_s
+    result += (arg(:value) || input(:value, argv1)).to_s
     result += %[</textarea>]
     result
   end

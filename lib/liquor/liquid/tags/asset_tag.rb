@@ -20,7 +20,8 @@ class AssetTag < LiquorTag
 
     content = current_content.site.contents.published.located(argv1).first
     content ||= current_content.site.contents.published.identified(argv1).first
-    case content.content_type_group
+
+    case content&.content_type_group
     when 'image'
       path = content.path ? content.path : context.registers['controller'].helpers.scribo.content_path(content)
       %[<img] +
@@ -41,6 +42,8 @@ class AssetTag < LiquorTag
       %[<script] +
         attr_str(:src, arg(:src), path) +
         %[/></script>]
+    else
+      "<!-- unknown asset: #{argv1} -->"
     end
   end
 end

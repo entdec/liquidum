@@ -42,6 +42,7 @@ module Liquor
 
     def render(content, options = {})
       template = Liquid::Template.parse(content)
+      options[:registers] = {} unless options[:registers]
       options[:registers][:file_system] = LiquorFileSystem.new(options[:registers])
       result = template.render(options[:assigns].stringify_keys, registers: options[:registers])
 

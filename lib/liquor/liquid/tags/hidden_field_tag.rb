@@ -10,6 +10,9 @@
 #
 # This last usage requires a model on the form
 #
+
+require_relative './text_field_tag'
+
 class HiddenFieldTag < TextFieldTag
   def initialize(tag, args, tokens)
     super

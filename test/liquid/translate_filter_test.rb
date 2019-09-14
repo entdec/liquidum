@@ -33,4 +33,14 @@ class TranslateFilterTest < ActiveSupport::TestCase
       assert_includes result, 'smurrefluts'
     end
   end
+  test 'cascades translations' do
+    I18n.stub(:t, '') do
+      template_data = "{{'a.b.c.dummy' | t}}"
+
+      template = Liquid::Template.parse(template_data)
+      result   = template.render
+      assert_not_includes result, 'translation missing'
+      assert_includes result, 'smurrefluts'
+    end
+  end
 end

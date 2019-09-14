@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'pry'
 
 module TranslateFilter
   # Translate text
@@ -14,10 +15,16 @@ module TranslateFilter
   #
   #   <div class="summary">{{'.title' | t: gender: 'm', locale: 'nl'}}</div>
   #
+
   def translate(input, options = {})
-    scope = Liquor.config.translation_scope(@context)
+    scope = Liquor.config.translation_scope(@context).split('.')
     locale = options.delete('locale')
-    I18n.t(input, options, locale: locale, scope: scope, cascade: true)
+
+    begin
+      result = I18n.translate(input, options, locale: locale, scope: scope.join('.'))
+      return result if !(result.nil? || result.include?('translation missing:'))
+      scope.pop
+    end while !scope.empty?
   end
   alias_method :t, :translate
 end

@@ -28,7 +28,7 @@ module Liquor
     def read_template_file(template_path)
       current_content = registers['content']
       content = current_content.site.contents.published.identified(template_path).first
-      content.data
+      content&.data
     end
   end
 

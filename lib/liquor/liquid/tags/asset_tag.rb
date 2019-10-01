@@ -21,26 +21,28 @@ class AssetTag < LiquorTag
     content = current_content.site.contents.published.located(argv1).first
     content ||= current_content.site.contents.published.identified(argv1).first
 
+    full_path = content.full_path
+    if File.basename(full_path).starts_with?('_')
+      full_path = context.registers['controller'].helpers.scribo.content_path(content)
+    end
+
     case content&.content_type_group
     when 'image'
-      path = content.path ? content.path : context.registers['controller'].helpers.scribo.content_path(content)
       %[<img] +
-        attr_str(:src, arg(:src), path) +
-        attr_str(:alt, content.title, content.name) +
-        attr_str(:title, content.caption, content.name) +
+        attr_str(:src, arg(:src), full_path) +
+        attr_str(:alt, content.title, content.title) +
+        attr_str(:title, content.caption, content.caption) +
         attr_str(:width, arg(:width)) +
         attr_str(:height, arg(:height)) +
         attr_str(:style, arg(:style)) +
         %[/>]
     when 'style'
-      path = content.path ? content.path : context.registers['controller'].helpers.scribo.content_path(content)
       %[<link rel="stylesheet" type="text/css"] +
-        attr_str(:href, arg(:href), path) +
+        attr_str(:href, arg(:href), full_path) +
         %[/>]
     when 'script'
-      path = content.path ? content.path : context.registers['controller'].helpers.scribo.content_path(content)
       %[<script] +
-        attr_str(:src, arg(:src), path) +
+        attr_str(:src, arg(:src), full_path) +
         %[/></script>]
     else
       "<!-- unknown asset: #{argv1} -->"

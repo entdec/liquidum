@@ -26,7 +26,7 @@ class AssetTag < LiquorTag
       full_path = context.registers['controller'].helpers.scribo.content_path(content)
     end
 
-    case content&.content_type_group
+    case content&.media_type
     when 'image'
       %[<img] +
         attr_str(:src, arg(:src), full_path) +
@@ -36,14 +36,18 @@ class AssetTag < LiquorTag
         attr_str(:height, arg(:height)) +
         attr_str(:style, arg(:style)) +
         %[/>]
-    when 'style'
-      %[<link rel="stylesheet" type="text/css"] +
-        attr_str(:href, arg(:href), full_path) +
-        %[/>]
-    when 'script'
-      %[<script] +
-        attr_str(:src, arg(:src), full_path) +
-        %[/></script>]
+    when 'text'
+      if content&.content_type == 'text/css'
+        %[<link rel="stylesheet" type="text/css"] +
+          attr_str(:href, arg(:href), full_path) +
+          %[/>]
+      elsif content&.content_type = 'application/javascript'
+        %[<script] +
+          attr_str(:src, arg(:src), full_path) +
+          %[/></script>]
+      else
+        "<!-- unknown asset: #{argv1} -->"
+      end
     else
       "<!-- unknown asset: #{argv1} -->"
     end

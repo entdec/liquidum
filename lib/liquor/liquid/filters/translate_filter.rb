@@ -20,7 +20,7 @@ module TranslateFilter
     locale = options.delete('locale')
 
     begin
-      result = I18n.translate(input, options, locale: locale, scope: scope.join('.'))
+      result = I18n.translate(input, options, locale: locale, scope: scope.join('.'), site: @context.registers['content']&.site)
       return result if !(result.nil? || result.include?('translation missing:'))
       scope.pop
     end while !scope.empty?

@@ -59,7 +59,7 @@ module Liquor
       assigns   = template.assigns.stringify_keys.merge(options[:assigns] || {}) if template.assigns
       registers = template.registers.stringify_keys.merge(options[:registers] || {}) if template.registers
 
-      result = Tilt[options[:filter]].new { result }.render if options[:filter].present?
+      result = Tilt[options[:filter]].new { result }.render if options[:filter].present? && Tilt[options[:filter]]
       if options[:layout]
         registers['_yield']     = {} unless registers['_yield']
         registers['_yield'][''] = result.delete("\n")

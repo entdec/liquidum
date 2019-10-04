@@ -2,11 +2,13 @@ module Liquor
   class Configuration
     attr_writer :logger
     attr_writer :translation_scope
+    attr_accessor :liquor_file_system
 
     def initialize
       @logger = Logger.new(STDOUT)
       @logger.level = Logger::INFO
       @translation_scope = ->(_context) {}
+      @liquor_file_system = 'Liquor::LiquorFileSystem'
     end
 
     # logger [Object].

@@ -13,9 +13,8 @@ class ContentForTag < LiquorBlock
   def render(context)
     super
 
-    output = render_body
-    context.registers['_yield'] = {} unless context.registers['_yield']
-    context.registers['_yield'][argv1] = output
+    context.registers['_yield'] ||= {}
+    context.registers['_yield'][argv1] = render_body
     ''
   end
 end

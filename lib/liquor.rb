@@ -46,8 +46,9 @@ module Liquor
 
     def render(content, options = {})
       template = Liquid::Template.parse(content)
-      options[:registers] = {} unless options[:registers]
-      options[:registers][:file_system] = Liquor.config.liquor_file_system.constantize.new(options[:registers])
+      options[:assigns] ||= {}
+      options[:registers] ||= {}
+      options[:registers]['file_system'] = Liquor.config.liquor_file_system.constantize.new(options[:registers])
       result = template.render(options[:context] || options[:assigns].stringify_keys, registers: options[:registers])
 
       if template.errors.present?
@@ -61,14 +62,14 @@ module Liquor
         Liquor.config.logger.error '-' * 80
       end
 
-      assigns   = template.assigns.stringify_keys.merge(options[:assigns] || {}) if template.assigns
-      registers = template.registers.stringify_keys.merge(options[:registers] || {}) if template.registers
+      options[:assigns].deep_merge!(template.assigns.stringify_keys) if template.assigns
+      options[:registers].deep_merge!(template.registers.stringify_keys) if template.registers
 
       result = Tilt[options[:filter]].new { result }.render if options[:filter].present? && Tilt[options[:filter]]
-      if options[:layout]
-        registers['_yield']     = {} unless registers['_yield']
-        registers['_yield'][''] = result.delete("\n")
-        result                  = render(options[:layout], assigns: assigns, registers: registers)
+      if options[:layout].present?
+        options[:registers]['_yield']     = {} unless options[:registers]['_yield']
+        options[:registers]['_yield'][''] = result.delete("\n")
+        result = render(options[:layout], assigns: options[:assigns], registers: options[:registers])
       end
       result
     end

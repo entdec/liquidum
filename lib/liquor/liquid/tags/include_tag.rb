@@ -14,7 +14,7 @@ class IncludeTag < LiquorTag
   def render(context)
     super
 
-    content = context.registers[:file_system].read_template_file(argv1)
+    content = context.registers['file_system'].read_template_file(argv1)
 
     result = ''
     context.stack do

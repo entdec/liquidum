@@ -32,6 +32,7 @@ module Liquor
 
       content = contents.include(template_path).first
       content ||= contents.identified(template_path).first
+
       content&.data || ''
     end
   end
@@ -62,14 +63,15 @@ module Liquor
         Liquor.config.logger.error '-' * 80
       end
 
-      options[:assigns].deep_merge!(template.assigns.stringify_keys) if template.assigns
+      assigns = options[:assigns].stringify_keys
+      assigns = assigns.merge(template.assigns.stringify_keys) if template.assigns
       options[:registers].deep_merge!(template.registers.stringify_keys) if template.registers
 
       result = Tilt[options[:filter]].new(options[:filter_options]) { result }.render if options[:filter].present? && Tilt[options[:filter]]
       if options[:layout].present?
         options[:registers]['_yield']     = {} unless options[:registers]['_yield']
         options[:registers]['_yield'][''] = result.delete("\n")
-        result = render(options[:layout], assigns: options[:assigns].merge('content' => result.delete("\n")), registers: options[:registers])
+        result = render(options[:layout], assigns: assigns.merge('content' => result.delete("\n")), registers: options[:registers])
       end
       result
     end

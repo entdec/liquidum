@@ -18,7 +18,7 @@ class IncludeTag < LiquorTag
 
     result = ''
     context.stack do
-      context.merge(attr_args.stringify_keys)
+      attr_args.stringify_keys.each { |key, value| context[key] = value }
       result += Liquor.render(content, context: context, registers: context.registers)
     end
     result

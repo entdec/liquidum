@@ -69,7 +69,7 @@ module Liquor
       if options[:layout].present?
         options[:registers]['_yield']     = {} unless options[:registers]['_yield']
         options[:registers]['_yield'][''] = result.delete("\n")
-        result = render(options[:layout], assigns: options[:assigns].merge('content' => result.delete("\n"), registers: options[:registers])
+        result = render(options[:layout], assigns: options[:assigns].merge('content' => result.delete("\n")), registers: options[:registers])
       end
       result
     end

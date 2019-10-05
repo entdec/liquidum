@@ -64,11 +64,11 @@ module Liquor
       assigns   = template.assigns.stringify_keys.merge(options[:assigns] || {}) if template.assigns
       registers = template.registers.stringify_keys.merge(options[:registers] || {}) if template.registers
 
-      result = Tilt[options[:filter]].new { result }.render if options[:filter].present? && Tilt[options[:filter]]
+      result = Tilt[options[:filter]].new(options[:filter_options]) { result }.render if options[:filter].present? && Tilt[options[:filter]]
       if options[:layout]
         registers['_yield']     = {} unless registers['_yield']
         registers['_yield'][''] = result.delete("\n")
-        result                  = render(options[:layout], assigns: assigns, registers: registers)
+        result                  = render(options[:layout], assigns: assigns.merge('content' => result.delete("\n")), registers: registers)
       end
       result
     end

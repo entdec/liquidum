@@ -65,11 +65,11 @@ module Liquor
       options[:assigns].deep_merge!(template.assigns.stringify_keys) if template.assigns
       options[:registers].deep_merge!(template.registers.stringify_keys) if template.registers
 
-      result = Tilt[options[:filter]].new { result }.render if options[:filter].present? && Tilt[options[:filter]]
+      result = Tilt[options[:filter]].new(options[:filter_options]) { result }.render if options[:filter].present? && Tilt[options[:filter]]
       if options[:layout].present?
         options[:registers]['_yield']     = {} unless options[:registers]['_yield']
         options[:registers]['_yield'][''] = result.delete("\n")
-        result = render(options[:layout], assigns: options[:assigns], registers: options[:registers])
+        result = render(options[:layout], assigns: options[:assigns].merge('content' => result.delete("\n"), registers: options[:registers])
       end
       result
     end

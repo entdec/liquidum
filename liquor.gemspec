@@ -19,7 +19,9 @@ Gem::Specification.new do |spec|
   spec.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
 
   spec.add_dependency 'babel-transpiler', '~> 0.7'
-  spec.add_dependency 'commonmarker', '~> 0.17'
+
+  spec.add_dependency 'kramdown', '~> 2.1'
+  spec.add_dependency 'kramdown-parser-gfm', '~> 1.0'
   spec.add_dependency 'liquid', '~> 4.0'
   spec.add_dependency 'parslet'
   spec.add_dependency 'pg'

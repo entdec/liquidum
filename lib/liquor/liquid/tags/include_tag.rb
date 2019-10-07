@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Include other published content identified by name
+# Include other published content
 #
 # == Basic usage:
 #    {%include 'navigation'}

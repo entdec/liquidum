@@ -18,11 +18,10 @@ class AssetTag < LiquorTag
 
     current_content = context.registers['content']
 
-    content = current_content.site.contents.published.located(argv1).first
-    content ||= current_content.site.contents.published.identified(argv1).first
+    content = current_content.site.contents.published.located(argv1, restricted: false).first
 
     full_path = content.full_path
-    if File.basename(full_path).starts_with?('_')
+    if File.basename(full_path).include?('_')
       full_path = context.registers['controller'].helpers.scribo.content_path(content)
     end
 
@@ -36,20 +35,18 @@ class AssetTag < LiquorTag
         attr_str(:height, arg(:height)) +
         attr_str(:style, arg(:style)) +
         %[/>]
-    when 'text'
+    else
       if content&.content_type == 'text/css'
         %[<link rel="stylesheet" type="text/css"] +
           attr_str(:href, arg(:href), full_path) +
           %[/>]
-      elsif content&.content_type = 'application/javascript'
+      elsif content&.content_type == 'application/javascript'
         %[<script] +
           attr_str(:src, arg(:src), full_path) +
           %[/></script>]
       else
         "<!-- unknown asset: #{argv1} -->"
       end
-    else
-      "<!-- unknown asset: #{argv1} -->"
     end
   end
 end

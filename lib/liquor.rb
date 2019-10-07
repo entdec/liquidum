@@ -31,8 +31,6 @@ module Liquor
       contents = current_content.site.contents.published
 
       content = contents.include(template_path).first
-      content ||= contents.identified(template_path).first
-
       content&.data || ''
     end
   end

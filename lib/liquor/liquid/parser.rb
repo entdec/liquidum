@@ -15,7 +15,7 @@ module Liquor
       rule(:space?) { space.maybe }
 
       # Things
-      rule(:identifier) { (match('[a-zA-Z]') >> match('[a-zA-Z0-9\.\_\-\[\]\'\"]').repeat) }
+      rule(:identifier) { (match('[a-zA-Z]') >> match('[a-zA-Z0-9\.\/\_\-\[\]\'\"]').repeat) }
       rule(:symbol_literal) { colon >> identifier.as(:svalue) }
 
       rule(:nsqvalue) { match["^'"] }

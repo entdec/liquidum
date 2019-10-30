@@ -20,17 +20,17 @@ class AssetTag < LiquorTag
 
     content = current_content.site.contents.published.located(argv1, restricted: false).first
 
+    return "<!-- asset '#{argv1}' not found -->" unless content
+
     full_path = content.full_path
-    if File.basename(full_path).include?('_')
-      full_path = context.registers['controller'].helpers.scribo.content_path(content)
-    end
+    full_path = context.registers['controller'].helpers.scribo.content_path(content) if File.basename(full_path).include?('/_')
 
     case content&.media_type
     when 'image'
       %[<img] +
         attr_str(:src, arg(:src), full_path) +
-        attr_str(:alt, content.title, content.title) +
-        attr_str(:title, content.caption, content.caption) +
+        attr_str(:alt, content.properties['title'], content.properties['title']) +
+        attr_str(:title, content.properties['caption'], content.properties['caption']) +
         attr_str(:width, arg(:width)) +
         attr_str(:height, arg(:height)) +
         attr_str(:style, arg(:style)) +

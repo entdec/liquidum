@@ -3,6 +3,7 @@
 require 'liquid'
 require 'tilt'
 require 'sassc'
+require "addressable/uri"
 
 require 'liquor/version'
 require 'liquor/engine'

@@ -9,7 +9,6 @@ require 'liquor/version'
 require 'liquor/engine'
 require 'liquor/configuration'
 
-require 'liquor/liquid/drops/active_model/errors_drop'
 require 'liquor/liquid/liquid_helpers'
 require 'liquor/liquid/liquid_template_extensions'
 require 'liquor/liquid/liquor_block'

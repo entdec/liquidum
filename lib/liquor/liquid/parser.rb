@@ -9,19 +9,19 @@ module Liquor
       rule(:squote) { str("'").repeat(1) }
       rule(:dquote) { str('"').repeat(1) }
 
-      rule(:colon) { str(':').repeat(1) }
+      rule(:colon_or_eql) { match[":|="].repeat(1) }
 
       rule(:space) { match('\s').repeat(1) }
       rule(:space?) { space.maybe }
 
       # Things
       rule(:identifier) { (match('[a-zA-Z]') >> match('[a-zA-Z0-9\.\/\_\-\[\]\'\"]').repeat) }
-      rule(:symbol_literal) { colon >> identifier.as(:svalue) }
+      rule(:symbol_literal) { colon_or_eql >> identifier.as(:svalue) }
 
       rule(:nsqvalue) { match["^'"] }
       rule(:ndqvalue) { match['^"'] }
 
-      rule(:literal_value) { identifier >> colon >> identifier }
+      rule(:literal_value) { identifier >> colon_or_eql >> identifier }
 
       rule(:squoted_value) { squote >> nsqvalue.repeat.as(:value) >> squote }
       rule(:dquoted_value) { dquote >> ndqvalue.repeat.as(:value) >> dquote }
@@ -34,8 +34,8 @@ module Liquor
       # Grammar parts
       rule(:standalone) { identifier.as(:literal) >> space? }
       rule(:quoted) { standalone_quoted_value >> space? }
-      rule(:attr_with_literal) { identifier.as(:attr) >> colon >> identifier.as(:lvalue) >> space? }
-      rule(:attr_with_quoted) { identifier.as(:attr) >> colon >> quoted_value >> space? }
+      rule(:attr_with_literal) { identifier.as(:attr) >> colon_or_eql >> identifier.as(:lvalue) >> space? }
+      rule(:attr_with_quoted) { identifier.as(:attr) >> colon_or_eql >> quoted_value >> space? }
 
       rule(:attribute) { attr_with_quoted | attr_with_literal | quoted | standalone }
       rule(:expression) { attribute.repeat }

@@ -16,8 +16,8 @@ module Liquor
       @logger.is_a?(Proc) ? instance_exec(&@logger) : @logger
     end
 
-    def i18n_store(context)
-      @i18n_store.is_a?(Proc) ? instance_exec(&@i18n_store) : @i18n_store
+    def i18n_store(context, &block)
+      @i18n_store.is_a?(Proc) ? instance_exec(context, block, &@i18n_store) : @i18n_store
     end
   end
 end

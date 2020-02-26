@@ -8,7 +8,7 @@ module Liquor
       @logger = Logger.new(STDOUT)
       @logger.level = Logger::INFO
       @liquor_file_system = 'Liquor::LiquorFileSystem'
-      @i18n_store = ->(context) { nil }
+      @i18n_store = ->(context, block) { nil }
     end
 
     # logger [Object].

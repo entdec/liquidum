@@ -30,6 +30,7 @@ module TranslateFilter
       end
 
       result = I18n.t(key, options, locale: locale, scope: scope, cascade: { skip_root: false })
+      result = I18n::Backend::Simple.new.send(:interpolate, I18n.locale, result, options.symbolize_keys) if result
     end
 
     result

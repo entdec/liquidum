@@ -5,6 +5,8 @@ module Liquor
     include Engine.routes.url_helpers
 
     test 'should show message' do
+      skip 'To be revised'
+
       get completions_url(q: 'form'), headers: { 'SERVER_NAME' => 'localhost' }
       assert_response :success
 

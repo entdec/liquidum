@@ -68,8 +68,8 @@ module Liquor
       result = Tilt[options[:filter]].new(options[:filter_options]) { result }.render if options[:filter].present? && Tilt[options[:filter]]
       if options[:layout].present?
         options[:registers]['_yield']     = {} unless options[:registers]['_yield']
-        options[:registers]['_yield'][''] = result.delete("\n")
-        result = render(options[:layout], assigns: assigns.merge('content' => result.delete("\n")), registers: options[:registers])
+        options[:registers]['_yield'][''] = result
+        result = render(options[:layout], assigns: assigns.merge('content' => result), registers: options[:registers])
       end
       result
     end

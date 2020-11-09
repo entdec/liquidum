@@ -61,7 +61,7 @@ module Liquor
         Liquor.config.logger.error '-' * 80
       end
 
-      assigns = options[:assigns].stringify_keys
+      assigns = options[:assigns].deep_stringify_keys
       assigns = assigns.merge(template.assigns.stringify_keys) if template.assigns
       options[:registers].deep_merge!(template.registers.stringify_keys) if template.registers
 

@@ -5,12 +5,13 @@ module Liquor
     private
 
     def initialize(tag, args, tokens)
+      super
+      @blank = false
       begin
         @args = Liquor::Tag::Parser.new(args).args
       rescue Parslet::ParseFailed => e
         raise Parslet::ParseFailed, e.message + " (#{tag} #{args})"
       end
-      super
     end
 
     def render(context)

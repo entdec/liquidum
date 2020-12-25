@@ -34,8 +34,8 @@ module Liquor
       # Grammar parts
       rule(:standalone) { identifier.as(:literal) >> space? }
       rule(:quoted) { standalone_quoted_value >> space? }
-      rule(:attr_with_literal) { identifier.as(:attr) >> colon_or_eql >> identifier.as(:lvalue) >> space? }
-      rule(:attr_with_quoted) { identifier.as(:attr) >> colon_or_eql >> quoted_value >> space? }
+      rule(:attr_with_literal) { identifier.as(:attr) >> space? >> colon_or_eql >> space? >> identifier.as(:lvalue) >> space? }
+      rule(:attr_with_quoted) { identifier.as(:attr) >> space? >> colon_or_eql >> space? >> quoted_value >> space? }
 
       rule(:attribute) { attr_with_quoted | attr_with_literal | quoted | standalone }
       rule(:expression) { attribute.repeat }

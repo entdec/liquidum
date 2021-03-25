@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'kramdown', '~> 2.1'
   spec.add_dependency 'kramdown-parser-gfm', '~> 1.0'
-  spec.add_dependency 'liquid', '~> 4.0'
+  spec.add_dependency 'liquid', '~> 5.0'
   spec.add_dependency 'parslet'
   spec.add_dependency 'pg'
   spec.add_dependency 'rails', '>= 5.2'

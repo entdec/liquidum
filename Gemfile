@@ -17,4 +17,4 @@ gemspec
 gem 'pry'
 gem 'solargraph'
 
-gem 'auxilium', '~> 0.2', entdec: 'components/auxilium'
+gem 'auxilium', '~> 3', entdec: 'components/auxilium'

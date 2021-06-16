@@ -47,7 +47,7 @@ module Liquor
             Rails.logger.warn "No #{klass}" and return unless klass
 
             if relation.collection?
-              @object.send(name).lazy.map { |o| klass.new(o) }
+              Enumerator::LazyDrop.new(@object.send(name).lazy.map { |o| klass.new(o) })
             else
               klass.new(@object.send(name)) unless @object.send(name).nil?
             end

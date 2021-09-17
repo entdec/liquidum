@@ -1,6 +1,6 @@
 inherit_from: .rubocop_todo.yml
 AllCops:
-  TargetRubyVersion: 2.5
+  TargetRubyVersion: 2.7
   Exclude:
     - 'bin/**/*'
     - 'db/**/*'
@@ -26,9 +26,6 @@ Style/PercentLiteralDelimiters:
     '%w': '[]'
     '%W': '[]'
     '%x': '[]'
-
-Performance/Casecmp:
-  Enabled: false
 
 Style/Documentation:
   Enabled: false

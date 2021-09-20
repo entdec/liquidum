@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ActiveStorageAttachedOneDrop < Liquor::Drop
+class ActiveStorage::AttachmentDrop < Liquor::Drop
   def download
     @object.download
   end
@@ -11,5 +11,9 @@ class ActiveStorageAttachedOneDrop < Liquor::Drop
 
   def content_type
     @object.content_type
+  end
+
+  def [](something)
+    @object.send(something).to_s
   end
 end

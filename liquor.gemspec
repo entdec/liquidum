@@ -20,16 +20,16 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'babel-transpiler', '~> 0.7'
 
+  spec.add_dependency 'addressable', '~> 2'
   spec.add_dependency 'i18n', '~> 1.8'
   spec.add_dependency 'kramdown', '~> 2.1'
   spec.add_dependency 'kramdown-parser-gfm', '~> 1.0'
-  spec.add_dependency 'liquid', '~> 4.0'
+  spec.add_dependency 'liquid', '~> 5.0'
   spec.add_dependency 'parslet'
   spec.add_dependency 'pg'
   spec.add_dependency 'rails', '>= 5.2'
   spec.add_dependency 'sassc', '~> 2.2'
   spec.add_dependency 'slim-rails', '~> 3.2.0'
-  spec.add_dependency 'addressable', '~> 2'
 
   spec.add_development_dependency 'auxilium', '~> 0.2'
   spec.add_development_dependency 'minitest', '~> 5.11'

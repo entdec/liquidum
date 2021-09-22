@@ -39,7 +39,11 @@ module Liquor
       def association(*associations)
         associations.each do |name|
           define_method(name) do
-            relation = @object.class.reflect_on_all_associations.find { |a| a.name == name } if @object.class.respond_to?(:reflect_on_all_associations)
+            if @object.class.respond_to?(:reflect_on_all_associations)
+              relation = @object.class.reflect_on_all_associations.find do |a|
+                a.name == name
+              end
+            end
             return unless relation
 
             klass = "#{relation.class_name}Drop".classify.safe_constantize
@@ -49,7 +53,7 @@ module Liquor
             if relation.collection?
               # FIXME: The LazyDrop has unexpected side effects for exisiting templates, this needs to be discussed further
               # Enumerator::LazyDrop.new(@object.send(name).lazy.map { |o| klass.new(o) })
-              @object.send(name).lazy.map { |o| klass.new(o) }
+              @object.send(name).map { |o| klass.new(o) }
             else
               klass.new(@object.send(name)) unless @object.send(name).nil?
             end

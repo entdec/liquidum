@@ -12,4 +12,10 @@ class ActiveStorageAttachedOneDrop < Liquor::Drop
   def content_type
     @object.content_type
   end
+
+  def to_io
+    return unless @object.attached?
+
+    StringIO.new(@object.download)
+  end
 end

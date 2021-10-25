@@ -8,6 +8,10 @@ module Liquor
       @object = object
     end
 
+    def is_for_a?(klass)
+      @object.is_a?(klass)
+    end
+
     def to_gid
       @object.to_gid
     end

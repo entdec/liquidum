@@ -29,13 +29,17 @@ module TranslateFilter
         scope = obj.translation_scope
       end
 
-      result = I18n.t(key, locale: locale, scope: scope, cascade: { skip_root: false }, **options)
-      result = I18n::Backend::Simple.new.send(:interpolate, I18n.locale, result, options.symbolize_keys) if result
+      result = I18n.t(key, locale: locale, scope: scope, cascade: { skip_root: false },
+                           **options.symbolize_keys)
+      if result
+        result = I18n::Backend::Simple.new.send(:interpolate, I18n.locale, result,
+                                                options.symbolize_keys)
+      end
     end
 
     result
   end
-  alias_method :t, :translate
+  alias t translate
 end
 
 Liquid::Template.register_filter(TranslateFilter)

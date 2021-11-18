@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module ArraywrapFilter
-  # Converts string to date time using format
+  # Wraps an object into an array if it is not already an array.
   #
   # Example:
-  #   <div class="date">{{'08012020 09:01:00'| strptime: '%D%M%Y %H:%S:%M'}}</div>
+  #   <div class="date">{%assign res = payload.test['MESSAGE']['ITEM'] | array_wrap %}{%for item in res %}{{item['PN']['$']}}{%endfor%}</div>
   ##
   def array_wrap(input)
      Array.wrap(input)

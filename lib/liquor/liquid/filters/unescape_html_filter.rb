@@ -7,6 +7,7 @@ module UnescapeHTMLFilter
   #   <div class="summary">{{payload.test['MESSAGE']['STRING']['$'] | unescape_html}}</div>
   ##
   def unescape_html(input)
+    return '' if input.blank?
     CGI.unescapeHTML(input)
   end
 end

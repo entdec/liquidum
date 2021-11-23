@@ -1,8 +1,12 @@
 # Liquor
-Short description and motivation.
+Simplified use of Shopify's liquid, including some handy filters, tags and drops. 
 
 ## Usage
-How to use my plugin.
+Basically it's as easy as:
+
+```ruby
+Liquor.render("{{payload.test}}", assigns: { 'payload' => { 'test' => 'blah' } })
+```
 
 ## Installation
 Add this line to your application's Gemfile:

@@ -1,4 +1,16 @@
-= form_tag '/upload' do
-  label for="file" Assigns
-  = text_area_tag :assigns, params[:assigns]
-
+hr/
+= @sandbox.result
+hr/
+= sts.form_for(@sandbox, url: sandbox_index_path) do |f|
+  = sts.card(title: ('SandBox'))   do |card|
+    - card.action
+      = f.submit
+    = sts.tabs do |t|
+      - t.tab :main
+        .grid.grid-cols-12.gap-4
+          .col-span-12
+            = f.editor :context, mode: "application/json"
+          .col-span-12
+            = f.editor :template, mode: "text/plain"
+          .col-span-12
+            = f.editor :result, mode: "text/plain", input_html: {value: @sandbox.result} 

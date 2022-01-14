@@ -2,24 +2,26 @@ require_dependency 'liquor/application_controller'
 
 module Liquor
   class SandboxController < ApplicationController
+    before_action :set_objects
     class Sandbox
       include ActiveModel::Model
 
-      def initialize(attributes = {})
-        attributes.each do |attr, _value|
-          # Setter
-          define_singleton_method("#{attr}=") { |val| attributes[attr] = val }
-          # Getter
-          define_singleton_method(attr) { attributes[attr] }
-        end
-      end
+      attr_accessor :template, :context, :result
     end
 
-    def index
-      @sandbox = Sandbox.new(template: params[:template], context: params[:context], result: @result)
-      @sandbox.result = Liquor.render(params[:template], assigns: params[:context]) if request.post?
-      # FIXME: Use @sandbox in the view, with our regular form_with helper
-      # Show @sandbox.result in the output, also in a textarea
+    def index; end
+
+    def create
+      @sandbox.result = Liquor.render(@sandbox.template,
+                                      assigns: JSON.parse(@sandbox.context))
+      render :index
+    end
+
+    private
+
+    def set_objects
+      @sandbox = Sandbox.new(template: params.dig(:sandbox_controller_sandbox, :template),
+                             context: params.dig(:sandbox_controller_sandbox, :context), result: '')
     end
   end
 end

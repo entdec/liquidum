@@ -16,9 +16,10 @@ module Liquor
     end
 
     def index
-      @sandbox = Sandbox.new(template: params[:template], context: params[:context])
-      result = nil
-      result = Liquor.render(params[:template], assigns: params[:context]) if request.post?
+      @sandbox = Sandbox.new(template: params[:template], context: params[:context], result: @result)
+      @sandbox.result = Liquor.render(params[:template], assigns: params[:context]) if request.post?
+      # FIXME: Use @sandbox in the view, with our regular form_with helper
+      # Show @sandbox.result in the output, also in a textarea
     end
   end
 end

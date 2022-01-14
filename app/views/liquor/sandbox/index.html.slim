@@ -1,10 +1,7 @@
-hr/
-= @sandbox.result
-hr/
-= sts.form_for(@sandbox, url: sandbox_index_path) do |f|
-  = sts.card(title: ('SandBox'))   do |card|
+= sts.form_for(@sandbox, url: sandbox_index_path, data: { turbo: false }) do |f|
+  = sts.card(title: 'Liquid Sandbox') do |card|
     - card.action
-      = f.submit
+      = f.submit t('.render')
     = sts.tabs do |t|
       - t.tab :main
         .grid.grid-cols-12.gap-4
@@ -13,4 +10,4 @@ hr/
           .col-span-12
             = f.editor :template, mode: "text/plain"
           .col-span-12
-            = f.editor :result, mode: "text/plain", input_html: {value: @sandbox.result} 
+            = f.editor :result, mode: "text/plain", read_only: true

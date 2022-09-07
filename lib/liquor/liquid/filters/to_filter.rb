@@ -32,6 +32,10 @@ module ToFilter
       return date if options[:format].to_s.empty?
 
       date.strftime(options[:format].to_s)
+    when 'sgid'
+      return '' if input.nil? || !input.respond_to?(:to_sgid)
+
+      input.to_sgid(for: options[:for], expires_on: options[:expires_on] || (Time.now + 1.day)).to_s
     else
       raise 'No to format given'
     end

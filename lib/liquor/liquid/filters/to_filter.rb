@@ -35,7 +35,8 @@ module ToFilter
     when 'sgid'
       return '' if input.nil? || !input.respond_to?(:to_sgid)
 
-      input.to_sgid(for: options[:for], expires_on: options[:expires_on] || (Time.now + 1.day)).to_s
+      # Should accept for and expires_on options but vorto/nuntius does not allow that
+      input.to_sgid.to_s
     else
       raise 'No to format given'
     end

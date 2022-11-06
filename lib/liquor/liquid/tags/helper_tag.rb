@@ -10,7 +10,7 @@
 #    {%helper 'user_index_path' user%}
 #
 
-class HelperTag < LiquorTag
+class HelperTag < LiquidumTag
   include Rails.application.routes.url_helpers
 
   def render(context)

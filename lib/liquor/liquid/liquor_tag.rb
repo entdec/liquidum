@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class LiquorTag < Liquid::Tag
-  include Liquor::LiquidHelpers
+class LiquidumTag < Liquid::Tag
+  include Liquidum::LiquidHelpers
 end

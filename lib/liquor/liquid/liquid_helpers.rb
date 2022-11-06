@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Liquor
+module Liquidum
   module LiquidHelpers
     private
 
@@ -8,7 +8,7 @@ module Liquor
       super
       @blank = false
       begin
-        @args = Liquor::Tag::Parser.new(args).args
+        @args = Liquidum::Tag::Parser.new(args).args
       rescue Parslet::ParseFailed => e
         raise Parslet::ParseFailed, e.message + " (#{tag} #{args})"
       end

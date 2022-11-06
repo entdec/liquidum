@@ -1,4 +1,4 @@
-Liquor::Engine.routes.draw do
+Liquidum::Engine.routes.draw do
   resources :completions
   resources :sandbox
 end

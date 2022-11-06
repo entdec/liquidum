@@ -1,7 +1,7 @@
 require 'test_helper'
 
-class Liquor::Test < ActiveSupport::TestCase
+class Liquidum::Test < ActiveSupport::TestCase
   test 'truth' do
-    assert_kind_of Module, Liquor
+    assert_kind_of Module, Liquidum
   end
 end

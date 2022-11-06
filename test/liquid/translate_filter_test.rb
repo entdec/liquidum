@@ -4,14 +4,14 @@ require 'test_helper'
 
 class TranslateFilterTest < ActiveSupport::TestCase
   setup do
-    Liquor.config.i18n_store = ->(context, block) { I18n::Backend::KeyValue.new({'index.test' => 'Test'}) }
+    Liquidum.config.i18n_store = ->(context, block) { I18n::Backend::KeyValue.new({'index.test' => 'Test'}) }
   end
 
   test 'will allow translations' do
     skip 'To be revised'
 
     subject = "{{'index.test'|t: locale: 'en'}}"
-    result = Liquor.render(subject)
+    result = Liquidum.render(subject)
 
     assert_not_includes result, 'translation missing'
     assert_equal 'Test', result
@@ -21,7 +21,7 @@ class TranslateFilterTest < ActiveSupport::TestCase
     skip 'To be revised'
 
     subject = "{{'.test'|t: locale: 'en'}}"
-    result = Liquor.render(subject)
+    result = Liquidum.render(subject)
 
     assert_not_includes result, 'translation missing'
     assert_equal 'Test', result

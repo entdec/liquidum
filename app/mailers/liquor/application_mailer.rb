@@ -1,4 +1,4 @@
-module Liquor
+module Liquidum
   class ApplicationMailer < ActionMailer::Base
     default from: 'from@example.com'
     layout 'mailer'

@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
   resource :accounts
-  mount Liquor::Engine => '/liquor'
+  mount Liquidum::Engine => '/liquidum'
 end

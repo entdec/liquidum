@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Liquor
+module Liquidum
   class Drop < Liquid::Drop
     delegate :id, :errors, to: :@object
 

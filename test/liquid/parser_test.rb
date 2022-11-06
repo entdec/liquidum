@@ -10,50 +10,50 @@ require 'test_helper'
 
 class ParserTest < ActiveSupport::TestCase
   test 'parses standalone literal' do
-    args = Liquor::Tag::Parser.new("shipment").args
+    args = Liquidum::Tag::Parser.new("shipment").args
     assert_includes args, literal: 'shipment'
   end
 
   test 'parses repeated standalone literal' do
-    args = Liquor::Tag::Parser.new("shipment user").args
+    args = Liquidum::Tag::Parser.new("shipment user").args
     assert_includes args, literal: 'shipment'
     assert_includes args, literal: 'user'
   end
 
   test 'parses quoted literal' do
-    args = Liquor::Tag::Parser.new("'shipment'").args
+    args = Liquidum::Tag::Parser.new("'shipment'").args
     assert_includes args, quoted: 'shipment'
   end
 
   test 'parses repeated quoted literal' do
-    args = Liquor::Tag::Parser.new("'shipment' 'user'").args
+    args = Liquidum::Tag::Parser.new("'shipment' 'user'").args
     assert_includes args, quoted: 'shipment'
     assert_includes args, quoted: 'user'
   end
 
   test 'parses quoted and standalone literal' do
-    args = Liquor::Tag::Parser.new("'shipment' user").args
+    args = Liquidum::Tag::Parser.new("'shipment' user").args
     assert_includes args, quoted: 'shipment'
     assert_includes args, literal: 'user'
   end
 
   test 'parses quoted attribute value' do
-    args = Liquor::Tag::Parser.new("method:'post'").args
+    args = Liquidum::Tag::Parser.new("method:'post'").args
     assert_includes args, attr: 'method', value: 'post'
   end
 
   test 'parses literal attribute value' do
-    args = Liquor::Tag::Parser.new("method:post").args
+    args = Liquidum::Tag::Parser.new("method:post").args
     assert_includes args, attr: 'method', lvalue: 'post'
   end
 
   test 'parses literal attribute value with dot' do
-    args = Liquor::Tag::Parser.new("url:request.fullpath").args
+    args = Liquidum::Tag::Parser.new("url:request.fullpath").args
     assert_includes args, attr: 'url', lvalue: 'request.fullpath'
   end
 
   test 'parses combination' do
-    args = Liquor::Tag::Parser.new(%[shipment method:themethod method:"post" action:"/test" 'hoi' action:theaction]).args
+    args = Liquidum::Tag::Parser.new(%[shipment method:themethod method:"post" action:"/test" 'hoi' action:theaction]).args
     assert_includes args, literal: 'shipment'
     assert_includes args, attr: 'method', lvalue: 'themethod'
     assert_includes args, attr: 'action', lvalue: 'theaction'
@@ -63,7 +63,7 @@ class ParserTest < ActiveSupport::TestCase
   end
 
   test 'parses complicated literal' do
-    args = Liquor::Tag::Parser.new("locale request.query_parameters['lang']").args
+    args = Liquidum::Tag::Parser.new("locale request.query_parameters['lang']").args
     assert_includes args, literal: 'locale'
     assert_includes args, literal: "request.query_parameters['lang']"
   end

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class LiquorBlock < Liquid::Block
-  include Liquor::LiquidHelpers
+class LiquidumBlock < Liquid::Block
+  include Liquidum::LiquidHelpers
 end

@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-Liquor.setup do |config|
+Liquidum.setup do |config|
 end

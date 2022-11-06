@@ -5,22 +5,22 @@ require 'tilt'
 require 'sassc'
 require "addressable/uri"
 
-require 'liquor/version'
-require 'liquor/engine'
-require 'liquor/configuration'
-require 'liquor/drop'
+require 'liquidum/version'
+require 'liquidum/engine'
+require 'liquidum/configuration'
+require 'liquidum/drop'
 
-require 'liquor/liquid/liquid_helpers'
-require 'liquor/liquid/liquid_template_extensions'
-require 'liquor/liquid/liquor_block'
-require 'liquor/liquid/liquor_tag'
-require 'liquor/liquid/parser'
+require 'liquidum/liquid/liquid_helpers'
+require 'liquidum/liquid/liquid_template_extensions'
+require 'liquidum/liquid/liquidum_block'
+require 'liquidum/liquid/liquidum_tag'
+require 'liquidum/liquid/parser'
 
-module Liquor
+module Liquidum
   class Error < StandardError; end
   class UnknownStepTypeError < Error; end
 
-  class LiquorFileSystem
+  class LiquidumFileSystem
     attr_reader :registers
     def initialize(registers)
       @registers = registers
@@ -48,18 +48,18 @@ module Liquor
       template = Liquid::Template.parse(content)
       options[:assigns] ||= {}
       options[:registers] ||= {}
-      options[:registers]['file_system'] = Liquor.config.liquor_file_system.constantize.new(options[:registers])
+      options[:registers]['file_system'] = Liquidum.config.liquidum_file_system.constantize.new(options[:registers])
       result = template.render(options[:context] || options[:assigns].stringify_keys, registers: options[:registers])
 
       if template.errors.present?
-        Liquor.config.logger.error '--- Template rendering errors: ' + '-' * 49
+        Liquidum.config.logger.error '--- Template rendering errors: ' + '-' * 49
         template.errors.map do |error|
           next unless error.cause
 
-          Liquor.config.logger.error error
-          Liquor.config.logger.error '=> ' + error.cause.backtrace.first.to_s + ': ' + error.cause.message
+          Liquidum.config.logger.error error
+          Liquidum.config.logger.error '=> ' + error.cause.backtrace.first.to_s + ': ' + error.cause.message
         end
-        Liquor.config.logger.error '-' * 80
+        Liquidum.config.logger.error '-' * 80
       end
 
       assigns = options[:assigns].deep_stringify_keys

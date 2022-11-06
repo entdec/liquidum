@@ -1,13 +1,13 @@
-module Liquor
+module Liquidum
   class Configuration
     attr_writer :logger
-    attr_accessor :liquor_file_system
+    attr_accessor :liquidum_file_system
     attr_writer :i18n_store
 
     def initialize
       @logger = Logger.new(STDOUT)
       @logger.level = Logger::INFO
-      @liquor_file_system = 'Liquor::LiquorFileSystem'
+      @liquidum_file_system = 'Liquidum::LiquidumFileSystem'
       @i18n_store = ->(context, block) { nil }
     end
 

@@ -1,6 +1,6 @@
-require_dependency "liquor/application_controller"
+require_dependency "liquidum/application_controller"
 
-module Liquor
+module Liquidum
   class CompletionsController < ApplicationController
     def index
       q          = params[:q]

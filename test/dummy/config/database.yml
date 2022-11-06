@@ -7,12 +7,12 @@ default: &default
 
 development:
   <<: *default
-  database: liquor_development
+  database: liquidum_development
 
 test:
   <<: *default
-  database: liquor_test
+  database: liquidum_test
 
 production:
   <<: *default
-  database: liquor_production
+  database: liquidum_production

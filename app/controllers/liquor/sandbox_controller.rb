@@ -1,6 +1,6 @@
-require_dependency 'liquor/application_controller'
+require_dependency 'liquidum/application_controller'
 
-module Liquor
+module Liquidum
   class SandboxController < ApplicationController
     before_action :set_objects
     class Sandbox
@@ -12,7 +12,7 @@ module Liquor
     def index; end
 
     def create
-      @sandbox.result = Liquor.render(@sandbox.template, assigns: JSON.parse(@sandbox.context))
+      @sandbox.result = Liquidum.render(@sandbox.template, assigns: JSON.parse(@sandbox.context))
       render :index
     end
 

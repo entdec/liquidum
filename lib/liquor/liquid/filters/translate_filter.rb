@@ -18,7 +18,7 @@ module TranslateFilter
   def translate(input, options = {})
     result = nil
 
-    Liquor.config.i18n_store(@context) do |obj|
+    Liquidum.config.i18n_store(@context) do |obj|
       locale = options.delete('locale')
 
       key = input

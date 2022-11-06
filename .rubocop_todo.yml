@@ -12,25 +12,25 @@
 # SupportedStyles: nested, compact
 Style/ClassAndModuleChildren:
   Exclude:
-    - 'test/liquor_test.rb'
+    - "test/liquidum_test.rb"
 
 # Offense count: 6
 Style/Documentation:
   Exclude:
-    - 'spec/**/*'
-    - 'test/**/*'
-    - 'app/controllers/liquor/application_controller.rb'
-    - 'app/helpers/liquor/application_helper.rb'
-    - 'app/mailers/liquor/application_mailer.rb'
-    - 'app/models/liquor/application_record.rb'
-    - 'lib/liquor.rb'
-    - 'lib/liquor/engine.rb'
+    - "spec/**/*"
+    - "test/**/*"
+    - "app/controllers/liquidum/application_controller.rb"
+    - "app/helpers/liquidum/application_helper.rb"
+    - "app/mailers/liquidum/application_mailer.rb"
+    - "app/models/liquidum/application_record.rb"
+    - "lib/liquidum.rb"
+    - "lib/liquidum/engine.rb"
 
 # Offense count: 2
 Style/MixinUsage:
   Exclude:
-    - 'test/dummy/bin/setup'
-    - 'test/dummy/bin/update'
+    - "test/dummy/bin/setup"
+    - "test/dummy/bin/update"
 
 # Offense count: 27
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.

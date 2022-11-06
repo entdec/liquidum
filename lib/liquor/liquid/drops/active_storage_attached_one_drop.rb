@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ActiveStorageAttachedOneDrop < Liquor::Drop
+class ActiveStorageAttachedOneDrop < Liquidum::Drop
   def download
     @object.download
   end

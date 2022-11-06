@@ -7,7 +7,7 @@ class ArrayWrapTest < ActiveSupport::TestCase
   test 'wraps an object in with an array if it is not already an array' do
     template_data = "{%assign res = payload.test['MESSAGE']['ITEM'] | array_wrap %}{%for item in res %}{{item['PN']['$']}}{%endfor%}"
 
-    result = Liquor.render(template_data, assigns: { 'payload' => { 'test' => {
+    result = Liquidum.render(template_data, assigns: { 'payload' => { 'test' => {
                              'MESSAGE' => {
                                'ITEM' => {
                                  'PN' => {

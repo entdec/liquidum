@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ActiveStorageAttachedManyDrop < Liquor::Drop
+class ActiveStorageAttachedManyDrop < Liquidum::Drop
   include Enumerable
 
   def initialize(object)

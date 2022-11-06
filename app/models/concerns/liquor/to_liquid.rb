@@ -1,6 +1,6 @@
 # frozen_literal_strings: true
 
-module Liquor
+module Liquidum
   module ToLiquid
     extend ActiveSupport::Concern
 

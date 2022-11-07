@@ -16,5 +16,3 @@ gemspec
 # gem 'byebug', group: [:development, :test]
 gem 'pry'
 gem 'solargraph'
-
-gem 'auxilium', '~> 3', entdec: 'auxilium'

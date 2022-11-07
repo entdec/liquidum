@@ -38,7 +38,7 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency('rails', ['>= 5.2'])
     s.add_runtime_dependency('sassc', ['~> 2.2'])
     s.add_runtime_dependency('slim-rails', ['~> 3.2.0'])
-    s.add_development_dependency('auxilium', ['~> 0.2'])
+    s.add_development_dependency('auxilium', ['~>3'])
     s.add_development_dependency('minitest', ['~> 5.11'])
     s.add_development_dependency('minitest-reporters', ['~> 1.1'])
     s.add_development_dependency('pry', ['>= 0'])
@@ -46,7 +46,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency('rubocop', ['~> 1'])
   else
     s.add_dependency('addressable', ['~> 2'])
-    s.add_dependency('auxilium', ['~> 0.2'])
+    s.add_dependency('auxilium', ['~> 3'])
     s.add_dependency('babel-transpiler', ['~> 0.7'])
     s.add_dependency('i18n', ['~> 1.8'])
     s.add_dependency('kramdown', ['~> 2.1'])

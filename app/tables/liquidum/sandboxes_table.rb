@@ -2,9 +2,8 @@ module Liquidum
   class SandboxesTable < ApplicationTable
     model Sandbox
 
-    column(:context)
-    column(:template)
     column(:description)
+    column(:template)
     column(:created_at)
     column(:updated_at)
 

@@ -15,8 +15,9 @@ Gem::Specification.new do |spec|
   spec.date = '2021-11-18'
   spec.description = 'Ready made set of tags, parsings and awesomeness'
   spec.email = ['tom@degrunt.nl']
-  spec.files = ['MIT-LICENSE', 'README.md', 'Rakefile',
-                'app/controllers/liquidum', 'app/controllers/liquidum/application_controller.rb', 'app/controllers/liquidum/completions_controller.rb', 'app/controllers/liquidum/sandbox_controller.rb', 'app/helpers/liquidum', 'app/helpers/liquidum/application_helper.rb', 'app/jobs/liquidum', 'app/jobs/liquidum/application_job.rb', 'app/models/concerns', 'app/models/concerns/liquidum', 'app/models/concerns/liquidum/to_liquid.rb', 'app/views/liquidum', 'app/views/liquidum/sandbox', 'app/views/liquidum/sandbox/index.html.slim', 'config/routespec.rb', 'lib/liquidum', 'lib/liquidum.rb', 'lib/liquidum/configuration.rb', 'lib/liquidum/drop.rb', 'lib/liquidum/engine.rb', 'lib/liquidum/liquid', 'lib/liquidum/liquid/drops', 'lib/liquidum/liquid/drops/active_storage_attached_many_drop.rb', 'lib/liquidum/liquid/drops/active_storage_attached_one_drop.rb', 'lib/liquidum/liquid/drops/active_storage_attachment_drop.rb', 'lib/liquidum/liquid/drops/enumerator_lazy_drop.rb', 'lib/liquidum/liquid/filters', 'lib/liquidum/liquid/filters/encode_filter.rb', 'lib/liquidum/liquid/filters/format_filter.rb', 'lib/liquidum/liquid/filters/localize_filter.rb', 'lib/liquidum/liquid/filters/strptime_filter.rb', 'lib/liquidum/liquid/filters/array_wrap_filter.rb', 'lib/liquidum/liquid/filters/sum_filter.rb', 'lib/liquidum/liquid/filters/timezone_filter.rb', 'lib/liquidum/liquid/filters/to_filter.rb', 'lib/liquidum/liquid/filters/translate_filter.rb', 'lib/liquidum/liquid/filters/where_exp_filter.rb', 'lib/liquidum/liquid/liquid_helperspec.rb', 'lib/liquidum/liquid/liquid_template_extensionspec.rb', 'lib/liquidum/liquid/liquidum_block.rb', 'lib/liquidum/liquid/liquidum_tag.rb', 'lib/liquidum/liquid/parser.rb', 'lib/liquidum/liquid/tags', 'lib/liquidum/liquid/tags/helper_tag.rb', 'lib/liquidum/liquid/tags/render_tag.rb', 'lib/liquidum/version.rb']
+  spec.files = `git ls-files -z`.split("\x0").reject do |f|
+    f.match(%r{^(test|spec|features)/})
+  end
   spec.homepage = 'https://github.com/entdec/liquidum'
   spec.licenses = ['MIT']
   spec.rubygems_version = '3.1.6'

@@ -1,10 +1,20 @@
 module Liquidum
   module Options
     module ClassMethods
-      def option(name, default: nil)
-        attr_accessor(name)
+      def option(name, default: nil, proc: false)
+        attr_writer(name)
+        schema[name] = {default: default, proc: proc}
 
-        schema[name] = default
+        if schema[name][:proc]
+          define_method(name) do |*params|
+            value = instance_variable_get(:"@#{name}")
+            instance_exec(*params, &value)
+          end
+        else
+          define_method(name) do
+            instance_variable_get(:"@#{name}")
+          end
+        end
       end
 
       def schema
@@ -13,8 +23,8 @@ module Liquidum
     end
 
     def set_defaults!
-      self.class.schema.each do |name, default|
-        instance_variable_set(:"@#{name}", default)
+      self.class.schema.each do |name, options|
+        instance_variable_set(:"@#{name}", options[:default])
       end
     end
 
@@ -26,12 +36,21 @@ module Liquidum
   class Configuration
     include Options
 
-    option :logger, default: -> { Logger.new($stdout).tap { |l| l.level = Logger::INFO } }
+    option :logger, default: -> { Logger.new($stdout).tap { |l| l.level = Logger::INFO } }, proc: true
     option :liquidum_file_system, default: "Liquidum::LiquidumFileSystem"
-    option :i18n_store, default: ->(context, block) {}
+    attr_writer :i18n_store
 
     def initialize
+      @i18n_store = ->(context, block) {}
       set_defaults!
+    end
+
+    def i18n_store(context, &block)
+      old_i18n_backend = I18n.backend
+      I18n.backend = instance_exec(context, &@i18n_store)
+      yield
+    ensure
+      I18n.backend = old_i18n_backend
     end
   end
 

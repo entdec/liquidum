@@ -19,27 +19,27 @@ module TranslateFilter
     result = nil
 
     Liquidum.config.i18n_store(@context) do |obj|
-      locale = options.delete('locale')
+      locale = options.delete("locale")
 
       key = input
       scope = nil
 
-      if key.start_with?('.')
+      if key.start_with?(".")
         key = input[1..-1]
-        scope = obj.translation_scope
+        scope = obj.translation_scope if obj.respond_to?(:translation_scope)
       end
 
-      result = I18n.t(key, locale: locale, scope: scope, cascade: { skip_root: false },
+      result = I18n.t(key, locale: locale, scope: scope, cascade: {skip_root: false},
                            **options.symbolize_keys)
       if result
         result = I18n::Backend::Simple.new.send(:interpolate, I18n.locale, result,
-                                                options.symbolize_keys)
+          options.symbolize_keys)
       end
     end
 
     result
   end
-  alias t translate
+  alias_method :t, :translate
 end
 
 Liquid::Template.register_filter(TranslateFilter)

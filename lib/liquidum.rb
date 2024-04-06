@@ -3,7 +3,7 @@
 require 'liquid'
 require 'tilt'
 require 'sassc'
-require "addressable/uri"
+require 'addressable/uri'
 
 require 'liquidum/version'
 require 'liquidum/engine'
@@ -17,11 +17,14 @@ require 'liquidum/liquid/liquidum_tag'
 require 'liquidum/liquid/parser'
 
 module Liquidum
+  extend Configurable
+
   class Error < StandardError; end
   class UnknownStepTypeError < Error; end
 
   class LiquidumFileSystem
     attr_reader :registers
+
     def initialize(registers)
       @registers = registers
     end
@@ -37,19 +40,14 @@ module Liquidum
   end
 
   class << self
-    attr_reader :config
-
-    def setup
-      @config = Configuration.new
-      yield config
-    end
-
     def render(content, options = {})
       template = Liquid::Template.parse(content)
       options[:assigns] ||= {}
       options[:registers] ||= {}
-      options[:registers]['file_system'] = Liquidum.config.liquidum_file_system.constantize.new(options[:registers])
-      result = template.render(options[:context] || options[:assigns].stringify_keys, registers: options[:registers])
+      options[:registers]['file_system'] =
+        Liquidum.config.liquidum_file_system.constantize.new(options[:registers])
+      result = template.render(options[:context] || options[:assigns].stringify_keys,
+                               registers: options[:registers])
 
       if template.errors.present?
         Liquidum.config.logger.error '--- Template rendering errors: ' + '-' * 49
@@ -66,9 +64,14 @@ module Liquidum
       assigns = assigns.merge(template.assigns.stringify_keys) if template.assigns
       options[:registers].deep_merge!(template.registers.stringify_keys) if template.registers
 
-      result = Tilt[options[:filter]].new(options[:filter_options]) { result }.render if options[:filter].present? && Tilt[options[:filter]]
+      if options[:filter].present? && Tilt[options[:filter]]
+        result = Tilt[options[:filter]].new(options[:filter_options]) do
+          result
+        end.render
+      end
       if options[:layout].present?
-        result = render(options[:layout], assigns: assigns.merge('content' => result), registers: options[:registers])
+        result = render(options[:layout], assigns: assigns.merge('content' => result),
+                                          registers: options[:registers])
       end
 
       result

@@ -1,37 +1,14 @@
-inherit_from: .rubocop_todo.yml
+# https://www.fastruby.io/blog/ruby/code-quality/how-we-use-rubocop-and-standardrb.html
+
+require:
+  - standard
+
+inherit_gem:
+  standard: config/base.yml
+
 AllCops:
-  TargetRubyVersion: 2.7
+  NewCops: enable
   Exclude:
-    - 'bin/**/*'
-    - 'db/**/*'
-    - 'vagrant/**/*'
-    - 'vendor/**/*'
-    - 'spec/**/*'
-    - 'lib/generators/**/*'
-    - 'node_modules/**/*'
-    - 'test/dummy/**/*'
-    - 'test/dummy/config/**/*'
-
-Metrics:
-  Enabled: false
-
-Style/PercentLiteralDelimiters:
-  PreferredDelimiters:
-    '%':  '[]'
-    '%i': '[]'
-    '%q': '[]'
-    '%Q': '[]'
-    '%r': '[]'
-    '%s': '[]'
-    '%w': '[]'
-    '%W': '[]'
-    '%x': '[]'
-
-Style/Documentation:
-  Enabled: false
-
-Style/GuardClause:
-  Enabled: false
-
-Style/ClassAndModuleChildren:
-  Enabled: false
+    - node_modules/**/*
+    - public/**/*
+    - vendor/**/*

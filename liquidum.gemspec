@@ -28,17 +28,18 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency("i18n", ["~> 1.8"])
   spec.add_runtime_dependency("kramdown", ["~> 2.1"])
   spec.add_runtime_dependency("kramdown-parser-gfm", ["~> 1.0"])
-  spec.add_runtime_dependency("liquid", ["~> 5.1"])
+  spec.add_runtime_dependency("liquid", ["< 5.4"])
   spec.add_runtime_dependency("parslet", [">= 0"])
   spec.add_runtime_dependency("pg", [">= 0"])
   spec.add_runtime_dependency("rails", [">= 5.2"])
   spec.add_runtime_dependency("sassc", ["~> 2.2"])
   spec.add_runtime_dependency "slim-rails", "~> 3.6"
+
   spec.add_development_dependency("minitest", ["~> 5.11"])
   spec.add_development_dependency("minitest-reporters", ["~> 1.1"])
   spec.add_development_dependency("pry", ["> 0"])
   spec.add_development_dependency("pry-rails", ["~> 0.3"])
   spec.add_development_dependency "rubocop", "~> 1"
-
   spec.add_development_dependency "standard", "~> 1"
+  spec.add_development_dependency "debug", "~> 1"
 end

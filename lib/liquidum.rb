@@ -1,25 +1,26 @@
 # frozen_string_literal: true
 
-require 'liquid'
-require 'tilt'
-require 'sassc'
-require 'addressable/uri'
+require "liquid"
+require "tilt"
+require "sassc"
+require "addressable/uri"
 
-require 'liquidum/version'
-require 'liquidum/engine'
-require 'liquidum/configuration'
-require 'liquidum/drop'
+require "liquidum/version"
+require "liquidum/engine"
+require "liquidum/configuration"
+require "liquidum/drop"
 
-require 'liquidum/liquid/liquid_helpers'
-require 'liquidum/liquid/liquid_template_extensions'
-require 'liquidum/liquid/liquidum_block'
-require 'liquidum/liquid/liquidum_tag'
-require 'liquidum/liquid/parser'
+require "liquidum/liquid/liquid_helpers"
+require "liquidum/liquid/liquid_template_extensions"
+require "liquidum/liquid/liquidum_block"
+require "liquidum/liquid/liquidum_tag"
+require "liquidum/liquid/parser"
 
 module Liquidum
   extend Configurable
 
   class Error < StandardError; end
+
   class UnknownStepTypeError < Error; end
 
   class LiquidumFileSystem
@@ -30,12 +31,12 @@ module Liquidum
     end
 
     def read_template_file(template_path)
-      current_content = registers['content']
+      current_content = registers["content"]
 
       contents = current_content.site.contents.published
 
       content = contents.include(template_path).first
-      content&.data || ''
+      content&.data || ""
     end
   end
 
@@ -44,20 +45,20 @@ module Liquidum
       template = Liquid::Template.parse(content)
       options[:assigns] ||= {}
       options[:registers] ||= {}
-      options[:registers]['file_system'] =
+      options[:registers]["file_system"] =
         Liquidum.config.liquidum_file_system.constantize.new(options[:registers])
       result = template.render(options[:context] || options[:assigns].stringify_keys,
-                               registers: options[:registers])
+        registers: options[:registers])
 
       if template.errors.present?
-        Liquidum.config.logger.error '--- Template rendering errors: ' + '-' * 49
+        Liquidum.config.logger.error "--- Template rendering errors: " + "-" * 49
         template.errors.map do |error|
           next unless error.cause
 
           Liquidum.config.logger.error error
-          Liquidum.config.logger.error '=> ' + error.cause.backtrace.first.to_s + ': ' + error.cause.message
+          Liquidum.config.logger.error "=> " + error.cause.backtrace.first.to_s + ": " + error.cause.message
         end
-        Liquidum.config.logger.error '-' * 80
+        Liquidum.config.logger.error "-" * 80
       end
 
       assigns = options[:assigns].deep_stringify_keys
@@ -70,8 +71,8 @@ module Liquidum
         end.render
       end
       if options[:layout].present?
-        result = render(options[:layout], assigns: assigns.merge('content' => result),
-                                          registers: options[:registers])
+        result = render(options[:layout], assigns: assigns.merge("content" => result),
+          registers: options[:registers])
       end
 
       result

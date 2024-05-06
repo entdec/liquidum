@@ -1,5 +1,5 @@
 = sts.form_for(@sandbox, url: @sandbox.persisted? ? sandbox_path(@sandbox) : sandbox_index_path) do |f|
-  = sts.card(title: 'Liquid Sandbox') do |card|
+  = sts.card :liquid_sandbox do |card|
     - card.action
       = f.submit "Save", value: 'save'
     - card.action

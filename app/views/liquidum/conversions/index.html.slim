@@ -1,5 +1,5 @@
 = sts.form_for(@conversion, url: conversions_path, data: { turbo: false }) do |f|
-  = sts.card(title: 'Conversions') do |card|
+  = sts.card :conversions do |card|
     - card.action
       = f.submit "JSON -> YAML", name: "json_to_yaml"
       = f.submit "YAML -> JSON", name: "yaml_to_json"

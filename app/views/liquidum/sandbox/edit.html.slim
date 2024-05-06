@@ -1,16 +1,17 @@
 = sts.form_for(@sandbox, url: @sandbox.persisted? ? sandbox_path(@sandbox) : sandbox_index_path) do |f|
   = sts.card :liquid_sandbox do |card|
-    - card.action
+    - card.with_action
       = f.submit "Save", value: 'save'
-    - card.action
+    - card.with_action
       = f.submit t('.render'), name: "render_only"
-    - card.tab :main, padding: true
-      .grid.grid-cols-12.gap-4
-        .col-span-12
-          = f.input :description
-        .col-span-12
-          = f.editor :context, mode: "application/json"
-        .col-span-12
-          = f.editor :template, mode: "text/plain"
-        .col-span-12
-          = f.editor :result, mode: "text/plain", read_only: true
+    = sts.tabs do |tabs|
+      - tabs.with_tab :main, padding: true
+        .grid.grid-cols-12.gap-4
+          .col-span-12
+            = f.input :description
+          .col-span-12
+            = f.editor :context, mode: "application/json"
+          .col-span-12
+            = f.editor :template, mode: "text/plain"
+          .col-span-12
+            = f.editor :result, mode: "text/plain", read_only: true

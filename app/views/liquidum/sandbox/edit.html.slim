@@ -1,10 +1,10 @@
 = sts.form_for(@sandbox, url: @sandbox.persisted? ? sandbox_path(@sandbox) : sandbox_index_path) do |f|
   = sts.card(title: 'Liquid Sandbox') do |card|
-    - card.action
+    - card.with_action
       = f.submit "Save", value: 'save'
-    - card.action
+    - card.with_action
       = f.submit t('.render'), name: "render_only"
-    - card.tab :main, padding: true
+    - card.with_tab :main, padding: true
       .grid.grid-cols-12.gap-4
         .col-span-12
           = f.input :description

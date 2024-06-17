@@ -1,23 +1,24 @@
-require_dependency 'liquidum/application_controller'
+require_dependency "liquidum/application_controller"
 
 module Liquidum
   class SandboxController < ApplicationController
-    before_action :set_objects, except: %i[index render_only]
+    before_action :set_objects, except: %i[index]
 
-    def index; end
+    def index
+    end
 
     def new
       render :edit
     end
 
     def create
-      return render_only if params[:render_only] == 'commit'
+      return render_only if params[:render_only] == "commit"
 
       @sandbox.update(sandbox_attributes)
 
       respond_with @sandbox,
-                   collection_location: -> { edit_sandbox_path(@sandbox) },
-                   action: :edit
+        collection_location: -> { edit_sandbox_path(@sandbox) },
+        action: :edit
     end
 
     def edit
@@ -27,13 +28,13 @@ module Liquidum
     end
 
     def update
-      return render_only if params[:render_only] == 'commit'
+      return render_only if params[:render_only] == "commit"
 
       @sandbox.update(sandbox_attributes)
 
       respond_with @sandbox,
-                   collection_location: -> { edit_sandbox_path(@sandbox) },
-                   action: :edit
+        collection_location: -> { edit_sandbox_path(@sandbox) },
+        action: :edit
     end
 
     private
@@ -49,7 +50,7 @@ module Liquidum
 
     def set_objects
       @sandbox = Sandbox.find(params[:id]) if params[:id]
-      @sandbox ||= Sandbox.new(template: '{{test}}', context: '{"test": "context"}')
+      @sandbox ||= Sandbox.new(template: "{{test}}", context: '{"test": "context"}')
     end
 
     def sandbox_attributes

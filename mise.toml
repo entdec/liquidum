@@ -1,0 +1,4 @@
+# If gpg fails use `MISE_GPG_VERIFY=false`
+[tools]
+node = "24"
+ruby = "4"

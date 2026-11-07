@@ -12,7 +12,7 @@ class RenderTag < LiquidumTag
     return unless argv1
 
     template = Liquid::Template.parse(argv1)
-    template.render(context, registers: context.registers)
+    template.render(context)
   end
 end
 

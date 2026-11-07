@@ -47,8 +47,13 @@ module Liquidum
       options[:registers] ||= {}
       options[:registers]["file_system"] =
         Liquidum.config.liquidum_file_system.constantize.new(options[:registers])
-      result = template.render(options[:context] || options[:assigns].stringify_keys,
-        registers: options[:registers])
+      # A Liquid::Context (from a tag) already carries its registers, and since
+      # Liquid 5.4 those are a Liquid::Registers, which render won't take again
+      result = if options[:context]
+        template.render(options[:context])
+      else
+        template.render(options[:assigns].stringify_keys, registers: options[:registers])
+      end
 
       if template.errors.present?
         Liquidum.config.logger.error "--- Template rendering errors: " + "-" * 49
@@ -63,7 +68,7 @@ module Liquidum
 
       assigns = options[:assigns].deep_stringify_keys
       assigns = assigns.merge(template.assigns.stringify_keys) if template.assigns
-      options[:registers].deep_merge!(template.registers.stringify_keys) if template.registers
+      template.registers&.each { |key, value| options[:registers][key.to_s] = value }
 
       if options[:filter].present? && Tilt[options[:filter]]
         result = Tilt[options[:filter]].new(options[:filter_options]) do

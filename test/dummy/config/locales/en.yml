@@ -31,3 +31,14 @@
 
 en:
   hello: "Hello world"
+  orders:
+    portal_url: "Link to the order"
+  activerecord:
+    models:
+      order:
+        one: "Order"
+        other: "Orders"
+    attributes:
+      order:
+        number: "Order number"
+        customer: "Ordered by"

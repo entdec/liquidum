@@ -9,6 +9,8 @@ require "liquidum/version"
 require "liquidum/engine"
 require "liquidum/configuration"
 require "liquidum/drop"
+require "liquidum/variable"
+require "liquidum/variables"
 
 require "liquidum/liquid/liquid_helpers"
 require "liquidum/liquid/liquid_template_extensions"

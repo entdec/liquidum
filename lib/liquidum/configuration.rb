@@ -38,6 +38,9 @@ module Liquidum
 
     option :logger, default: -> { Logger.new($stdout).tap { |l| l.level = Logger::INFO } }, proc: true
     option :liquidum_file_system, default: "Liquidum::LiquidumFileSystem"
+    # The controller Liquidum's controllers inherit from, to decide who may
+    # use them, e.g. "Admin::BaseController". Set it in an initializer.
+    option :parent_controller, default: "::ApplicationController"
     attr_writer :i18n_store
 
     def initialize

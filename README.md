@@ -10,6 +10,63 @@ Basically it's as easy as:
 Liquidum.render("{{payload.test}}", assigns: { 'payload' => { 'test' => 'blah' } })
 ```
 
+## Variables for editors
+
+Editors can offer the variables a template can use, as a picker or as
+suggestions after `{{`. Liquidum works them out from your drops: what Liquid
+can call on a drop, labelled with `human_attribute_name` in the current
+locale, typed from the model's columns, and followed through `association`
+to other drops.
+
+```ruby
+class OrderDrop < Liquidum::Drop
+  association :customer, :order_lines
+  delegate :number, :total, to: :@object
+
+  # Only for what Liquidum can't work out
+  describe :total, type: :money, hint: "Including VAT"
+  describe :portal_url, label: -> { I18n.t("orders.portal_url") }
+
+  def portal_url = …
+end
+
+OrderDrop.variables # => [#<data Liquidum::Variable name="customer", label="Customer", type="object", …>, …]
+```
+
+`describe` takes `label:`, `type:`, `hint:` (a string, or a proc to translate
+it), and `drop:` and `collection:` for a method that returns other drops. A
+drop is for the model with its name (`OrderDrop` is for `Order`); override
+`self.model` when that's not so.
+
+Mount the engine and give the editor a URL with the template's roots, signed,
+so a browser can't ask about other classes:
+
+```ruby
+mount Liquidum::Engine => "/liquidum"
+```
+
+```ruby
+variables = Liquidum::Variables.new(order: OrderDrop, portal_url: :string)
+liquidum.variables_path(roots: variables.token)
+```
+
+The editor asks for one level at a time:
+
+```
+GET /liquidum/variables?roots=…&path=order.customer
+{"path": "order.customer", "variables": [{"name": "email", "label": "Email", "type": "string", "collection": false, "children": false}, …]}
+```
+
+In a collection the path goes into its elements (`order.order_lines.product`).
+The endpoint only describes variables and never reads a record. Its
+controllers inherit from `::ApplicationController`; to choose another one:
+
+```ruby
+Liquidum.configure do |config|
+  config.parent_controller = "Admin::BaseController"
+end
+```
+
 ## Installation
 
 Add this line to your application's Gemfile:

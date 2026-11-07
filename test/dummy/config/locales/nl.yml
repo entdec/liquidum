@@ -1,0 +1,7 @@
+nl:
+  orders:
+    portal_url: "Link naar de bestelling"
+  activerecord:
+    attributes:
+      order:
+        number: "Bestelnummer"

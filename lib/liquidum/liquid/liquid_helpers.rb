@@ -47,7 +47,10 @@ module Liquidum
       if argv1.key? :quoted
         argv1[:quoted].to_s
       elsif argv1.key? :literal
-        @context.key?(argv1[:literal].to_s) ? @context[argv1[:literal].to_s] : argv1[:literal].to_s
+        # Not @context.key?: since Liquid 5.4 it only finds top-level
+        # variables, not paths like account.logo
+        value = @context[argv1[:literal].to_s]
+        value.nil? ? argv1[:literal].to_s : value
       end
     end
 

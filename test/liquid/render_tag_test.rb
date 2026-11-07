@@ -8,6 +8,11 @@ class RenderTagTest < ActiveSupport::TestCase
     assert_equal 'Hello world', result
   end
 
+  test 'renders a variable at a path' do
+    result = Liquidum.render('{%render product.description%}', assigns: { 'product' => { 'description' => 'Hello {{ name }}' }, 'name' => 'world' })
+    assert_equal 'Hello world', result
+  end
+
   test 'renders with the registers of the outer template' do
     template = Liquid::Template.parse("{%render body%}")
     result = template.render({ 'body' => "{%helper content_tag 'p' 'Hello world'%}" },

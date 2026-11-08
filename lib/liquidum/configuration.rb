@@ -41,10 +41,14 @@ module Liquidum
     # The controller Liquidum's controllers inherit from, to decide who may
     # use them, e.g. "Admin::BaseController". Set it in an initializer.
     option :parent_controller, default: "::ApplicationController"
+    # The scope of the `t` filter's keys that start with a dot, from the Liquid
+    # context, e.g. ->(context) { context.registers["template"]&.translation_scope }
+    option :translation_scope, default: ->(_context) {}, proc: true
+    # The I18n backend the `t` filter translates with, from the Liquid context
     attr_writer :i18n_store
 
     def initialize
-      @i18n_store = ->(context, block) {}
+      @i18n_store = ->(_context) { I18n.backend }
       set_defaults!
     end
 

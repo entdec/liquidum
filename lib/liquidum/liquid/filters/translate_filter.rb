@@ -4,6 +4,11 @@ module TranslateFilter
   # Translate text
   #
   # Example:
+  #   <div class="summary">{{'index.title' | t}}</div>
+  #
+  # a key that starts with a dot is in the scope config.translation_scope gives
+  # (looked up from that scope towards the root, when the backend cascades):
+  #
   #   <div class="summary">{{'.title' | t}}</div>
   #
   # provide optional locale to translate the text in, if you don't pass it it will use I18n.locale
@@ -18,7 +23,7 @@ module TranslateFilter
   def translate(input, options = {})
     result = nil
 
-    Liquidum.config.i18n_store(@context) do |obj|
+    Liquidum.config.i18n_store(@context) do
       locale = options.delete("locale")
 
       key = input
@@ -26,7 +31,7 @@ module TranslateFilter
 
       if key.start_with?(".")
         key = input[1..-1]
-        scope = obj.translation_scope if obj.respond_to?(:translation_scope)
+        scope = Liquidum.config.translation_scope(@context).presence
       end
 
       result = I18n.t(key, locale: locale, scope: scope, cascade: {skip_root: false},

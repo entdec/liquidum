@@ -10,6 +10,29 @@ Basically it's as easy as:
 Liquidum.render("{{payload.test}}", assigns: { 'payload' => { 'test' => 'blah' } })
 ```
 
+## Translations
+
+The `t` filter translates a key with I18n, in the current locale or the one
+given, with the other arguments interpolated:
+
+```liquid
+{{ 'orders.greeting' | t: name: customer.name }}
+{{ 'orders.greeting' | t: name: customer.name, locale: 'nl' }}
+```
+
+It translates with your app's translations, unless `config.i18n_store` gives
+another backend for the Liquid context. A key that starts with a dot is in the
+scope `config.translation_scope` gives for the context; with a backend that
+includes `I18n::Backend::Cascade` it is then looked up from that scope towards
+the root:
+
+```ruby
+Liquidum.configure do |config|
+  config.i18n_store = ->(context) { I18n::Backend::Chain.new(MyBackend.new, I18n.backend) }
+  config.translation_scope = ->(context) { context.registers["template"]&.translation_scope }
+end
+```
+
 ## Variables for editors
 
 Editors can offer the variables a template can use, as a picker or as

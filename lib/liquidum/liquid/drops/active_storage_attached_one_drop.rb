@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class ActiveStorageAttachedOneDrop < Liquidum::Drop
+  def attached?
+    @object.attached?
+  end
+
   def download
     @object.download
   end

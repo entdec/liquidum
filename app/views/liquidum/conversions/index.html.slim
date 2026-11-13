@@ -1,5 +1,5 @@
 = sts.form_for(@conversion, url: conversions_path, data: { turbo: false }) do |f|
-  = sts.card(title: t('.title')) do |card|
+  = sts.card(:liquidum_conversions, title: t('.title')) do |card|
     - card.with_action
       = f.submit t('.json_to_yaml'), name: "json_to_yaml"
       = f.submit t('.yaml_to_json'), name: "yaml_to_json"

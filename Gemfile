@@ -9,3 +9,11 @@ gemspec
 source "https://rubygems.pkg.github.com/entdec" do
   gem "shipkit"
 end
+
+# The sandbox and conversion pages use Satis, as host apps do (and Satis's
+# tailwindcss-rails an asset pipeline)
+gem "satis"
+gem "propshaft"
+# The sandboxes table is a Mensa table
+git_source(:entdec) { |repo_name| "git@github.com:entdec/#{repo_name}.git" }
+gem "mensa", entdec: "mensa"

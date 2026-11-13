@@ -1,7 +1,7 @@
 = sts.form_for(@sandbox, url: @sandbox.persisted? ? sandbox_path(@sandbox) : sandbox_index_path) do |f|
-  = sts.card(title: 'Liquid Sandbox') do |card|
+  = sts.card(title: t('.title'), icon: 'fad fa-toolbox') do |card|
     - card.with_action
-      = f.submit "Save", value: 'save'
+      = f.submit t('.save'), name: "save"
     - card.with_action
       = f.submit t('.render'), name: "render_only"
     - card.with_tab :main, padding: true

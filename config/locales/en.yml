@@ -1,0 +1,44 @@
+en:
+  menu:
+    liquidum_sandboxes:
+      create: New sandbox
+  activemodel:
+    attributes:
+      liquidum/conversions_controller/conversion:
+        source: Source
+        result: Result
+  activerecord:
+    models:
+      liquidum/sandbox:
+        one: Sandbox
+        other: Sandboxes
+    attributes:
+      liquidum/sandbox:
+        context: Context (JSON)
+        created_at: Created
+        description: Description
+        result: Result
+        template: Template
+        updated_at: Updated
+    errors:
+      models:
+        liquidum/sandbox:
+          attributes:
+            context:
+              not_a_json_object: 'must be a JSON object, like {"name": "value"}'
+  liquidum:
+    sandbox:
+      saved: The sandbox has been saved
+      index:
+        sandboxes: Liquid sandboxes
+        search: Search by description or template
+      edit:
+        title: Liquid sandbox
+        save: Save
+        render: Render
+    conversions:
+      index:
+        title: Conversions
+        json_to_yaml: JSON → YAML
+        yaml_to_json: YAML → JSON
+        slim_to_html: Slim → HTML

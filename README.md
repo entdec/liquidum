@@ -110,6 +110,23 @@ Or install it yourself as:
 $ gem install liquidum
 ```
 
+Mount the engine for the variables endpoint, the sandbox and the conversions,
+and copy in its migrations for the sandbox:
+
+```ruby
+mount Liquidum::Engine, at: "/liquidum", as: "liquidum"
+```
+
+```bash
+$ bin/rails liquidum:install:migrations
+$ bin/rails db:migrate
+```
+
+The sandbox (`/liquidum/sandbox`) renders a template with a JSON context, and
+saves the ones worth coming back to. Its pages use Satis. Its controllers
+inherit from `config.parent_controller`, so set that to decide who may use
+them.
+
 ## Contributing
 
 Contribution directions go here.

@@ -1,9 +1,9 @@
 = sts.form_for(@conversion, url: conversions_path, data: { turbo: false }) do |f|
-  = sts.card(title: 'Conversions') do |card|
+  = sts.card(title: t('.title')) do |card|
     - card.with_action
-      = f.submit "JSON -> YAML", name: "json_to_yaml"
-      = f.submit "YAML -> JSON", name: "yaml_to_json"
-      = f.submit "SLIM -> HTML", name: "slim_to_html"
+      = f.submit t('.json_to_yaml'), name: "json_to_yaml"
+      = f.submit t('.yaml_to_json'), name: "yaml_to_json"
+      = f.submit t('.slim_to_html'), name: "slim_to_html"
     - card.with_tab :main, padding: true
         .grid.grid-cols-12.gap-4
           .col-span-12

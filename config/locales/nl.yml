@@ -1,0 +1,44 @@
+nl:
+  menu:
+    liquidum_sandboxes:
+      create: Nieuwe zandbak
+  activemodel:
+    attributes:
+      liquidum/conversions_controller/conversion:
+        source: Bron
+        result: Resultaat
+  activerecord:
+    models:
+      liquidum/sandbox:
+        one: Zandbak
+        other: Zandbakken
+    attributes:
+      liquidum/sandbox:
+        context: Context (JSON)
+        created_at: Aangemaakt
+        description: Omschrijving
+        result: Resultaat
+        template: Sjabloon
+        updated_at: Gewijzigd
+    errors:
+      models:
+        liquidum/sandbox:
+          attributes:
+            context:
+              not_a_json_object: 'moet een JSON-object zijn, zoals {"naam": "waarde"}'
+  liquidum:
+    sandbox:
+      saved: De zandbak is opgeslagen
+      index:
+        sandboxes: Liquid-zandbakken
+        search: Zoek op omschrijving of sjabloon
+      edit:
+        title: Liquid-zandbak
+        save: Opslaan
+        render: Renderen
+    conversions:
+      index:
+        title: Conversies
+        json_to_yaml: JSON → YAML
+        yaml_to_json: YAML → JSON
+        slim_to_html: Slim → HTML

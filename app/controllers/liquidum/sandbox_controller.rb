@@ -1,6 +1,6 @@
-require_dependency "liquidum/application_controller"
-
 module Liquidum
+  # Try out Liquid: a template rendered with a JSON context, saved to come
+  # back to
   class SandboxController < ApplicationController
     before_action :set_objects, except: %i[index]
 
@@ -12,40 +12,40 @@ module Liquidum
     end
 
     def create
-      return render_only if params[:render_only] == "commit"
-
-      @sandbox.update(sandbox_attributes)
-
-      respond_with @sandbox,
-        collection_location: -> { edit_sandbox_path(@sandbox) },
-        action: :edit
+      save
     end
 
     def edit
-      if @sandbox.valid?
-        @sandbox.result = Liquidum.render(@sandbox.template, assigns: JSON.parse(@sandbox.context))
-      end
+      render_result
     end
 
     def update
-      return render_only if params[:render_only] == "commit"
-
-      @sandbox.update(sandbox_attributes)
-
-      respond_with @sandbox,
-        collection_location: -> { edit_sandbox_path(@sandbox) },
-        action: :edit
+      save
     end
 
     private
 
-    def render_only
+    # "Render" shows the result without saving, "Save" saves and comes back
+    def save
       @sandbox.assign_attributes(sandbox_attributes)
+      return render_edit if params.key?(:render_only)
 
-      if @sandbox.valid?
-        @sandbox.result = Liquidum.render(@sandbox.template, assigns: JSON.parse(@sandbox.context))
+      if @sandbox.save
+        redirect_to edit_sandbox_path(@sandbox), notice: t("liquidum.sandbox.saved")
+      else
+        render :edit, status: :unprocessable_entity
       end
-      render :edit, status: 302
+    end
+
+    def render_edit
+      render_result
+      render :edit, status: @sandbox.errors.any? ? :unprocessable_entity : :ok
+    end
+
+    def render_result
+      return unless @sandbox.valid?
+
+      @sandbox.result = Liquidum.render(@sandbox.template, assigns: @sandbox.assigns)
     end
 
     def set_objects

@@ -57,7 +57,12 @@ OrderDrop.variables # => [#<data Liquidum::Variable name="customer", label="Cust
 ```
 
 `describe` takes `label:`, `type:`, `hint:` (a string, or a proc to translate
-it), and `drop:` and `collection:` for a method that returns other drops. A
+it), `drop:` and `collection:` for a method that returns other drops, and
+`values:`, the values a variable can have, by their labels
+(`values: -> { {"account" => "Club", "sponsor" => "Sponsor"} }`), for an editor
+to complete `{% if line.party == "` or `| where: "party", "` with. A model's
+enum has its values already, labelled as
+`activerecord.attributes.<model>.<enum, plural>.<value>`. A
 drop is for the model with its name (`OrderDrop` is for `Order`); override
 `self.model` when that's not so.
 
@@ -81,6 +86,20 @@ GET /liquidum/variables?roots=…&path=order.customer
 ```
 
 In a collection the path goes into its elements (`order.order_lines.product`).
+
+And for what can follow a `|`, the filters Liquid has (its own, Liquidum's and
+the app's), each with its arguments and, for one on a collection, what it
+leaves: the same items (`where`, `sort`) or one of them (`first`):
+
+```
+GET /liquidum/filters
+{"filters": [{"name": "where", "label": "Those whose property has the value", "arguments": [{"name": "property", "kind": "property"}, {"name": "value", "kind": "value"}], "keeps": "collection"}, …]}
+```
+
+An argument's kind is `property`, `value` (of the property before it),
+`format` (a date's), `key` (a translation's) or `any`. An app describes its own
+filters with `Liquidum::Filters.describe :money, arguments: [[:currency]]`, and
+labels them as `liquidum.filters.<name>`.
 The endpoint only describes variables and never reads a record. Its
 controllers inherit from `::ApplicationController`; to choose another one:
 

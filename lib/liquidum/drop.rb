@@ -74,10 +74,13 @@ module Liquidum
       #   describe :portal_url, label: -> { I18n.t("orders.portal_url") }
       #   describe :owner, drop: "UserDrop"
       #   describe :tags, drop: "TagDrop", collection: true
+      #   describe :party, values: -> { {"account" => I18n.t("…"), "sponsor" => I18n.t("…")} }
       #
-      # A label or hint can be a proc, to translate it in the current locale.
-      def describe(name, label: nil, type: nil, hint: nil, drop: nil, collection: nil)
-        descriptions[name.to_s] = {label: label, type: type, hint: hint, drop: drop, collection: collection}.compact
+      # A label, hint or values can be a proc, to translate them in the current
+      # locale. Values are the values the variable can have, by their labels
+      # (or a list of them); an enum of the model has its own already.
+      def describe(name, label: nil, type: nil, hint: nil, drop: nil, collection: nil, values: nil)
+        descriptions[name.to_s] = {label: label, type: type, hint: hint, drop: drop, collection: collection, values: values}.compact
       end
 
       def descriptions
@@ -122,8 +125,23 @@ module Liquidum
           type: (description[:type] || (drop ? :object : attribute_type(name)))&.to_s,
           hint: resolve(description[:hint]),
           drop: drop,
-          collection: description.fetch(:collection) { relation&.collection? || false }
+          collection: description.fetch(:collection) { relation&.collection? || false },
+          values: values_for(name, description[:values])
         )
+      end
+
+      # [{value, label}]: as described, else the model's enum's values, each
+      # labelled as activerecord.attributes.<model>.<enum, plural>.<value>
+      def values_for(name, described)
+        values = resolve(described)
+        if values.nil? && model.respond_to?(:defined_enums) && model.defined_enums.key?(name)
+          scope = "activerecord.attributes.#{model.model_name.i18n_key}.#{name.pluralize}"
+          values = model.defined_enums[name].keys.to_h { |value| [value, I18n.t(value, scope: scope, default: value.humanize)] }
+        end
+        case values
+        when Hash then values.map { |value, label| {value: value.to_s, label: label.to_s} }
+        when Array then values.map { |value| {value: value.to_s, label: value.to_s.humanize} }
+        end
       end
 
       def label_for(name)

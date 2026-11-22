@@ -5,3 +5,7 @@ nl:
     attributes:
       order:
         number: "Bestelnummer"
+      order_line:
+        kinds:
+          product: "Product"
+          shipping: "Verzending"

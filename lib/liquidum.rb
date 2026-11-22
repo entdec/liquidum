@@ -11,6 +11,7 @@ require "liquidum/configuration"
 require "liquidum/drop"
 require "liquidum/variable"
 require "liquidum/variables"
+require "liquidum/filters"
 
 require "liquidum/liquid/liquid_helpers"
 require "liquidum/liquid/liquid_template_extensions"

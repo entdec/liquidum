@@ -64,4 +64,15 @@ class DropVariablesTest < ActiveSupport::TestCase
     assert_equal CustomerDrop, buyer.drop
     assert_equal "object", buyer.type
   end
+
+  test "an enum's values, labelled, and values described" do
+    kind = OrderLineDrop.variables.find { |v| v.name == "kind" }
+    assert_equal [{value: "product", label: "Product"}, {value: "shipping", label: "Verzending"}], I18n.with_locale(:nl) { OrderLineDrop.variables.find { |v| v.name == "kind" }.values }
+    assert_equal [{value: "product", label: "Product"}, {value: "shipping", label: "Shipping"}], kind.values
+    assert_equal({value: "shipping", label: "Shipping"}, kind.as_json[:values].last)
+
+    assert_equal %w[1 2 3], OrderLineDrop.variables.find { |v| v.name == "quantity" }.values.pluck(:value)
+    assert_nil variable("number").values
+    refute variable("number").as_json.key?(:values)
+  end
 end

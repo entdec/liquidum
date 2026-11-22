@@ -10,11 +10,17 @@ module Liquidum
 
       filters = JSON.parse(@response.body)["filters"].index_by { |filter| filter["name"] }
       assert_equal({"name" => "where", "label" => "Those whose property has the value", "arguments" => [{"name" => "property", "kind" => "property"}, {"name" => "value", "kind" => "value"}], "keeps" => "collection"}, filters["where"])
-      assert_equal [{"name" => "format", "kind" => "format"}], filters["date"]["arguments"]
+      date = filters["date"]["arguments"].sole
+      assert_equal "format", date["kind"]
+      # The app's own formats, each once
+      assert_includes date["values"], {"value" => I18n.t("date.formats.long"), "label" => "Date, long"}
+      assert_includes date["values"], {"value" => I18n.t("time.formats.short"), "label" => "Time, short"}
+      assert_equal date["values"].uniq { |format| format["value"] }, date["values"]
       assert_equal "item", filters["first"]["keeps"]
       assert_equal [{"name" => "key", "kind" => "key"}], filters["t"]["arguments"]
       # Liquidum's own too
-      assert_equal [{"name" => "locale", "kind" => "any"}, {"name" => "format", "kind" => "format"}], filters["localize"]["arguments"]
+      locales = I18n.available_locales.map { |locale| {"value" => locale.to_s, "label" => locale.to_s} }
+      assert_equal [{"name" => "locale", "kind" => "locale", "values" => locales}, date], filters["localize"]["arguments"]
     end
 
     test "a filter that isn't described has its name and no arguments" do

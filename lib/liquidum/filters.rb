@@ -14,8 +14,10 @@ module Liquidum
   #
   # An argument's kind says what goes there: a property of the collection's
   # items ("property"), a value a property can have ("value", the property
-  # being the argument before), a date format ("format"), a translation's key
-  # ("key"), or anything ("any"). `keeps` is "collection" (the same items),
+  # being the argument before), a date format ("format", strftime's, with the
+  # app's date.formats and time.formats as its `values`), a
+  # translation's key ("key"), a locale ("locale", with the app's locales as
+  # its `values`), or anything ("any"). `keeps` is "collection" (the same items),
   # "item" (one of them) or nil. Labels are liquidum.filters.<name>, in the
   # current locale; a host describes its own filters the same way:
   #
@@ -38,10 +40,34 @@ module Liquidum
         {
           name: name,
           label: I18n.t(name, scope: "liquidum.filters", default: name.humanize),
-          arguments: description[:arguments].map { |argument, kind| {name: argument.to_s, kind: (kind || :any).to_s} },
+          arguments: description[:arguments].map { |argument, kind| argument(argument, kind || :any) },
           keeps: description[:keeps]&.to_s
         }.compact
       end
+    end
+
+    def argument(name, kind)
+      values = case kind
+      when :locale then I18n.available_locales.map { |locale| {value: locale.to_s, label: locale.to_s} }
+      when :format then formats
+      end
+      {name: name.to_s, kind: kind.to_s, values: values}.compact
+    end
+
+    # The app's own date and time formats (date.formats, time.formats in the
+    # current locale), strftime's patterns as date and localize take them,
+    # each once, labelled with its name
+    def formats
+      %w[date time].flat_map do |type|
+        patterns = I18n.t("#{type}.formats", default: {})
+        next [] unless patterns.is_a?(Hash)
+
+        patterns.filter_map do |format, pattern|
+          next unless pattern.is_a?(String)
+
+          {value: pattern, label: I18n.t(type, scope: "liquidum.formats", name: format, default: "#{type} #{format}")}
+        end
+      end.uniq { |format| format[:value] }
     end
 
     property = [:property, :property]
@@ -71,7 +97,7 @@ module Liquidum
       "minus" => [[[:number]]], "times" => [[[:number]]], "divided_by" => [[[:number]]], "modulo" => [[[:number]]],
       "at_least" => [[[:number]]], "at_most" => [[[:number]]],
       # Dates
-      "date" => [[[:format, :format]]], "localize" => [[[:locale], [:format, :format]]], "strptime" => [[[:format, :format]]],
+      "date" => [[[:format, :format]]], "localize" => [[[:locale, :locale], [:format, :format]]], "strptime" => [[[:format, :format]]],
       "timezone" => [[[:zone]]], "to" => [[[:type]]]
     }.each { |name, (arguments, keeps)| describe(name, arguments: arguments, keeps: keeps) }
   end

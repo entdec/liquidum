@@ -97,7 +97,9 @@ GET /liquidum/filters
 ```
 
 An argument's kind is `property`, `value` (of the property before it),
-`format` (a date's), `key` (a translation's) or `any`. An app describes its own
+`format` (a date's, strftime's, with the app's `date.formats` and
+`time.formats` as its `values`), `key` (a translation's), `locale` (with the
+app's locales as its `values`, as `localize: 'nl'` has it) or `any`. An app describes its own
 filters with `Liquidum::Filters.describe :money, arguments: [[:currency]]`, and
 labels them as `liquidum.filters.<name>`.
 

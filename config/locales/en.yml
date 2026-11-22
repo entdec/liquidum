@@ -27,6 +27,10 @@ en:
             context:
               not_a_json_object: 'must be a JSON object, like {"name": "value"}'
   liquidum:
+    # The app's date.formats and time.formats, for a date filter's format (Liquidum::Filters)
+    formats:
+      date: "Date, %{name}"
+      time: "Time, %{name}"
     tags:
       assign: "Sets a variable"
       attach: "Attaches a file"

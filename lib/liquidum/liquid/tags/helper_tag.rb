@@ -27,4 +27,4 @@ class HelperTag < LiquidumTag
   end
 end
 
-Liquid::Template.register_tag('helper', HelperTag)
+Liquid::Environment.default.register_tag('helper', HelperTag)

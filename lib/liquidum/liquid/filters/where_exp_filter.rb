@@ -67,4 +67,4 @@ module WhereExpFilter
 
 end
 
-Liquid::Template.register_filter(WhereExpFilter)
+Liquid::Environment.default.register_filter(WhereExpFilter)

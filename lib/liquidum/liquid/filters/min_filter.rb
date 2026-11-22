@@ -13,4 +13,4 @@ module MinFilter
     input.min
   end
 end
-Liquid::Template.register_filter(MinFilter)
+Liquid::Environment.default.register_filter(MinFilter)

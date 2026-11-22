@@ -11,4 +11,4 @@ module EncodeFilter
   end
 end
 
-Liquid::Template.register_filter(EncodeFilter)
+Liquid::Environment.default.register_filter(EncodeFilter)

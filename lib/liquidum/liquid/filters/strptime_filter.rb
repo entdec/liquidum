@@ -11,4 +11,4 @@ module StrptimeFilter
   end
 end
 
-Liquid::Template.register_filter(StrptimeFilter)
+Liquid::Environment.default.register_filter(StrptimeFilter)

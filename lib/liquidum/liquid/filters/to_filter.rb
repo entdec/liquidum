@@ -43,4 +43,4 @@ module ToFilter
   end
 end
 
-Liquid::Template.register_filter(ToFilter)
+Liquid::Environment.default.register_filter(ToFilter)

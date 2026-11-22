@@ -15,4 +15,4 @@ module TimezoneFilter
   end
 end
 
-Liquid::Template.register_filter(TimezoneFilter)
+Liquid::Environment.default.register_filter(TimezoneFilter)

@@ -13,4 +13,4 @@ module SumFilter
     input.sum
   end
 end
-Liquid::Template.register_filter(SumFilter)
+Liquid::Environment.default.register_filter(SumFilter)

@@ -12,4 +12,4 @@ module LocalizeFilter
   end
 end
 
-Liquid::Template.register_filter(LocalizeFilter)
+Liquid::Environment.default.register_filter(LocalizeFilter)

@@ -47,4 +47,4 @@ module TranslateFilter
   alias_method :t, :translate
 end
 
-Liquid::Template.register_filter(TranslateFilter)
+Liquid::Environment.default.register_filter(TranslateFilter)

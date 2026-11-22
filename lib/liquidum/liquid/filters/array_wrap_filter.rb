@@ -11,4 +11,4 @@ module ArrayWrapFilter
   end
 end
 
-Liquid::Template.register_filter(ArrayWrapFilter)
+Liquid::Environment.default.register_filter(ArrayWrapFilter)

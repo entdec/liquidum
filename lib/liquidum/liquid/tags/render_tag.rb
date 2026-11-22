@@ -16,4 +16,4 @@ class RenderTag < LiquidumTag
   end
 end
 
-Liquid::Template.register_tag('render', RenderTag)
+Liquid::Environment.default.register_tag('render', RenderTag)

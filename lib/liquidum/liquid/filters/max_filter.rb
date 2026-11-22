@@ -13,4 +13,4 @@ module MaxFilter
     input.max
   end
 end
-Liquid::Template.register_filter(MaxFilter)
+Liquid::Environment.default.register_filter(MaxFilter)

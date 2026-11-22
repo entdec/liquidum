@@ -11,4 +11,4 @@ module FormatFilter
   end
 end
 
-Liquid::Template.register_filter(FormatFilter)
+Liquid::Environment.default.register_filter(FormatFilter)

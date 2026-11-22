@@ -12,4 +12,4 @@ module UnescapeHTMLFilter
   end
 end
 
-Liquid::Template.register_filter(UnescapeHTMLFilter)
+Liquid::Environment.default.register_filter(UnescapeHTMLFilter)

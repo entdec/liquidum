@@ -17,8 +17,11 @@ module Liquidum
   # being the argument before), a date format ("format", strftime's, with the
   # app's date.formats and time.formats as its `values`), a
   # translation's key ("key"), a locale ("locale", with the app's locales as
-  # its `values`), or anything ("any"). `keeps` is "collection" (the same items),
-  # "item" (one of them) or nil. Labels are liquidum.filters.<name>, in the
+  # its `values`), or anything ("any"). `optional` says whether it can be left
+  # out, from the filter's method (truncate: 20 or truncate: 20, "…"), when its
+  # method says. `keeps` is "collection" (the same items), "item" (one of
+  # them), "property" (a list of the property its first argument names, as
+  # map gives) or nil. An undescribed filter has its method's arguments. Labels are liquidum.filters.<name>, in the
   # current locale; a host describes its own filters the same way:
   #
   #   Liquidum::Filters.describe :money, arguments: [], keeps: nil
@@ -36,22 +39,39 @@ module Liquidum
     def all
       names = Liquid::Environment.default.strainer_template.filter_method_names.map(&:to_s).sort
       names.map do |name|
-        description = DESCRIPTIONS.fetch(name, {arguments: [], keeps: nil})
+        description = DESCRIPTIONS[name]
+        parameters = parameters(name)
+        # Undescribed, its arguments are its method's, of any kind
+        arguments = description ? description[:arguments] : Array(parameters).map { |_, parameter| [parameter] }
         {
           name: name,
           label: I18n.t(name, scope: "liquidum.filters", default: name.humanize),
-          arguments: description[:arguments].map { |argument, kind| argument(argument, kind || :any) },
-          keeps: description[:keeps]&.to_s
+          arguments: arguments.each_with_index.map { |(argument, kind), index| argument(argument, kind || :any, parameters && parameters[index]) },
+          keeps: description&.dig(:keeps)&.to_s
         }.compact
       end
     end
 
-    def argument(name, kind)
+    # A filter method's positional arguments after its input, [kind, name]
+    # with kind :req or :opt; named ones (t: name: …, an options hash) aren't.
+    # nil when it takes any number (*args) or isn't a method
+    def parameters(name)
+      parameters = Liquid::Environment.default.strainer_template.instance_method(name).parameters.drop(1)
+      return nil if parameters.any? { |kind, _| kind == :rest }
+
+      parameters.select { |kind, parameter| %i[req opt].include?(kind) && parameter != :options }
+    rescue NameError
+      nil
+    end
+
+    # `optional` from its method's parameter at its place, when known
+    def argument(name, kind, parameter = nil)
       values = case kind
       when :locale then I18n.available_locales.map { |locale| {value: locale.to_s, label: locale.to_s} }
       when :format then formats
       end
-      {name: name.to_s, kind: kind.to_s, values: values}.compact
+      optional = parameter ? parameter.first == :opt : nil
+      {name: name.to_s, kind: kind.to_s, values: values, optional: optional}.compact
     end
 
     # The app's own date and time formats (date.formats, time.formats in the
@@ -74,9 +94,9 @@ module Liquidum
     value = [:value, :value]
     {
       # On collections
-      "compact" => [[], :collection], "concat" => [[[:items]], :collection], "first" => [[], :item], "last" => [[], :item],
-      "join" => [[[:separator]]], "map" => [[property]], "reverse" => [[], :collection], "size" => [[]],
-      "sort" => [[property], :collection], "sort_natural" => [[property], :collection], "uniq" => [[], :collection],
+      "compact" => [[property], :collection], "concat" => [[[:items]], :collection], "first" => [[], :item], "last" => [[], :item],
+      "join" => [[[:separator]]], "map" => [[property], :property], "reverse" => [[], :collection], "size" => [[]],
+      "sort" => [[property], :collection], "sort_natural" => [[property], :collection], "uniq" => [[property], :collection],
       "where" => [[property, value], :collection], "reject" => [[property, value], :collection],
       "where_exp" => [[[:item], [:condition]], :collection], "find" => [[property, value], :item],
       "find_index" => [[property, value]], "has" => [[property, value]], "sum" => [[]], "min" => [[]], "max" => [[]],

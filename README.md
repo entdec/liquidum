@@ -93,7 +93,7 @@ leaves: the same items (`where`, `sort`) or one of them (`first`):
 
 ```
 GET /liquidum/filters
-{"filters": [{"name": "where", "label": "Those whose property has the value", "arguments": [{"name": "property", "kind": "property"}, {"name": "value", "kind": "value"}], "keeps": "collection"}, …]}
+{"filters": [{"name": "where", "label": "Those whose property has the value", "arguments": [{"name": "property", "kind": "property", "optional": false}, {"name": "value", "kind": "value", "optional": true}], "keeps": "collection"}, …]}
 ```
 
 An argument's kind is `property`, `value` (of the property before it),
@@ -101,7 +101,12 @@ An argument's kind is `property`, `value` (of the property before it),
 `time.formats` as its `values`), `key` (a translation's), `locale` (with the
 app's locales as its `values`, as `localize: 'nl'` has it) or `any`. An app describes its own
 filters with `Liquidum::Filters.describe :money, arguments: [[:currency]]`, and
-labels them as `liquidum.filters.<name>`.
+labels them as `liquidum.filters.<name>`. Whether an argument is `optional`
+comes from the filter's method (`def pad(input, width, char = " ")`), and a
+filter that isn't described has its method's arguments; named ones (an
+`options` hash) aren't listed. `keeps` says what a filter on a collection
+leaves: the same items (`collection`), one of them (`item`) or a list of the
+property `map` names (`property`).
 
 And for what can follow `{%`, the tags, each with how it's written and whether
 it's a block, which an editor writes with its closing tag:

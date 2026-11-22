@@ -27,6 +27,27 @@ nl:
             context:
               not_a_json_object: 'moet een JSON-object zijn, zoals {"naam": "waarde"}'
   liquidum:
+    tags:
+      assign: "Zet een variabele"
+      attach: "Voegt een bestand toe"
+      break: "Stopt de lus"
+      capture: "Zet een variabele op de tekst erin"
+      case: "Een van meerdere, naar de waarde van een variabele"
+      comment: "Niet getoond"
+      continue: "Gaat door met het volgende item"
+      cycle: "Telkens de volgende van de waarden"
+      decrement: "Telt af"
+      echo: "Toont een waarde"
+      for: "Voor elk item"
+      helper: "De uitvoer van een helper"
+      if: "Alleen als een voorwaarde geldt"
+      ifchanged: "Alleen als het veranderde"
+      include: "Een ander sjabloon, met dezelfde variabelen"
+      increment: "Telt op"
+      raw: "Liquid getoond zoals het is"
+      render: "Een ander sjabloon"
+      tablerow: "Een tabelrij voor elk item"
+      unless: "Alleen als een voorwaarde niet geldt"
     filters:
       abs: "Absolute waarde"
       append: "Tekst erachter"

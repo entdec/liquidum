@@ -27,6 +27,27 @@ en:
             context:
               not_a_json_object: 'must be a JSON object, like {"name": "value"}'
   liquidum:
+    tags:
+      assign: "Sets a variable"
+      attach: "Attaches a file"
+      break: "Stops the loop"
+      capture: "Sets a variable to its text"
+      case: "One of several, by a variable's value"
+      comment: "Not shown"
+      continue: "Goes on with the loop's next item"
+      cycle: "Each time the next of its values"
+      decrement: "Counts down"
+      echo: "Shows a value"
+      for: "For each item"
+      helper: "A helper's output"
+      if: "Only when a condition holds"
+      ifchanged: "Only when it changed"
+      include: "Another template, sharing variables"
+      increment: "Counts up"
+      raw: "Liquid shown as it is"
+      render: "Another template"
+      tablerow: "A table row for each item"
+      unless: "Only when a condition doesn't hold"
     filters:
       abs: "Absolute value"
       append: "Text added after it"

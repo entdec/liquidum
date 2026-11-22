@@ -100,6 +100,17 @@ An argument's kind is `property`, `value` (of the property before it),
 `format` (a date's), `key` (a translation's) or `any`. An app describes its own
 filters with `Liquidum::Filters.describe :money, arguments: [[:currency]]`, and
 labels them as `liquidum.filters.<name>`.
+
+And for what can follow `{%`, the tags, each with how it's written and whether
+it's a block, which an editor writes with its closing tag:
+
+```
+GET /liquidum/tags
+{"tags": [{"name": "if", "label": "Only when a condition holds", "syntax": "if condition", "block": true}, …]}
+```
+
+An app describes its own with `Liquidum::Tags.describe :signature_field, syntax: "signature_field kind signer"`,
+labelled as `liquidum.tags.<name>`.
 The endpoint only describes variables and never reads a record. Its
 controllers inherit from `::ApplicationController`; to choose another one:
 

@@ -127,6 +127,39 @@ Liquidum.configure do |config|
 end
 ```
 
+## Conditions
+
+`Liquidum::Conditions` checks rules on Liquid variables: "if [all] of the
+following conditions are met: [screening.state] [is] [processed]". Nuntius
+sends a template's message only when they're met, Adiuvo runs a rule.
+
+```ruby
+conditions = Liquidum::Conditions.new(
+  "match" => "all", # or "any"
+  "rules" => [{"variable" => "ticket.priority", "operator" => "is", "value" => "urgent"}]
+)
+conditions.met?("ticket" => ticket) # the assigns a template renders with
+conditions.to_h # to store, without the rules that don't count
+```
+
+A rule's operator is one of Mensa's: `is`, `isnt`, `matches` (contains),
+`does_not_match`, `gt`, `gteq`, `lt`, `lteq`, `between` (with `value_to`),
+`is_empty` and `isnt_empty`. A value compares as a number, a date or a time
+when the variable is one, a list is one of its elements, and true and false
+are also yes and ja. Rules may come numbered, as a form sends them.
+
+The browser has the same, so a form or a test run can show what the server
+will do: `app/javascript/liquidum/conditions.js`, pinned as
+`liquidum/conditions` in an app with importmap-rails, on the variables as
+JSON (and `Date`s):
+
+```js
+import { met } from "liquidum/conditions"
+met({ match: "all", rules: [{ variable: "ticket.priority", operator: "is", value: "urgent" }] }, { ticket })
+```
+
+Both are tested with the same cases (`test/fixtures/files/conditions_cases.json`).
+
 ## Installation
 
 Add this line to your application's Gemfile:

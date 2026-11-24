@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.5.0
+
+- `Liquidum::Conditions`: rules on Liquid variables, met with all or any of
+  them, as Nuntius and Adiuvo each had their own (`Nuntius::Conditions`,
+  `Adiuvo::Conditions`).
+- The same in the browser, `app/javascript/liquidum/conditions.js`, pinned as
+  `liquidum/conditions` for an app with importmap-rails. Both are tested with
+  the same cases.
+
 ## Unreleased
 
 - `config.translation_scope` gives the scope of the `t` filter's keys that

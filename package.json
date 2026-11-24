@@ -1,0 +1,8 @@
+{
+  "name": "liquidum",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test 'test/javascript/**/*_test.js'"
+  }
+}

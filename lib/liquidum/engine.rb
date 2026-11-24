@@ -11,5 +11,18 @@ module Liquidum
         require_dependency(c)
       end
     end
+
+    # Its JavaScript (app/javascript/liquidum), pinned for an app with
+    # importmap-rails; an app that bundles imports it from there
+    initializer "liquidum.assets" do |app|
+      app.config.assets.paths << root.join("app/javascript") if app.config.respond_to?(:assets)
+    end
+
+    initializer "liquidum.importmap", before: "importmap" do |app|
+      if app.config.respond_to?(:importmap)
+        app.config.importmap.paths << root.join("config/importmap.rb")
+        app.config.importmap.cache_sweepers << root.join("app/javascript")
+      end
+    end
   end
 end
